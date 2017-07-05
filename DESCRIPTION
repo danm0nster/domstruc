@@ -14,3 +14,4 @@ URL: https://github.com/danm0nster/domstruc
 BugReports: https://github.com/danm0nster/domstruc/issues
 Encoding: UTF-8
 LazyData: true
+Suggests: testthat
