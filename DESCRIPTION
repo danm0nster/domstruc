@@ -1,0 +1,14 @@
+Package: domstruc
+Type: Package
+Title: Compute Metrics of Dominance Hierarchies
+Version: 0.1.0
+Authors@R: c(
+    person("Mønster", "Dan", email = "danm@econ.au.dk", role = c("cre", "aut")),
+    person("Hobson", "Elizabeth", email = "ehobson@santafe.edu", role = "aut"),
+    person("DeDeo", "Simon", email = "simon.dedeo@gmail.com", role = "aut"))
+Maintainer: Dan Mønster <danm@econ.au.dk>
+Description: More about what it does (maybe more than one line)
+    Use four spaces when indenting paragraphs within the Description.
+License: What license is it under?
+Encoding: UTF-8
+LazyData: true
