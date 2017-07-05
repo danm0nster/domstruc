@@ -6,6 +6,7 @@ This R package computes various classic and new measures of dominance hierarchie
 ## Example
 
 ## Installation
+Since this package is not yet on CRAN, you have to install it from GitHub.
 
 ## Overview
 
