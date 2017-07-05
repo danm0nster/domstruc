@@ -10,5 +10,7 @@ Maintainer: Dan Mønster <danm@econ.au.dk>
 Description: More about what it does (maybe more than one line)
     Use four spaces when indenting paragraphs within the Description.
 License: What license is it under?
+URL: https://github.com/danm0nster/domstruc
+BugReports: https://github.com/danm0nster/domstruc/issues
 Encoding: UTF-8
 LazyData: true
