@@ -14,13 +14,21 @@ ComputeTransitionMatrix <- function(A, eps = 1e-6) {
   } else {
     if (!is.matrix(A))
       stop("A must be a matrix.")
+      # TODO(danm0nster): possibly allow for arrays and data frames
+    else {
+      if (dim(A)[1] != dim(A)[2]) {
+        stop("Aggression matrix must be square.")
+      } else if (dim(A)[1] < 2) {
+        stop("Aggression matrix dimension must be greater than 1.")
+      }
+    }
   }
   if (eps > 1) {
     stop("eps must be less than or equal to 1.")
   } else if (eps < 0) {
     stop("eps must be positive.")
   } else if (eps < .Machine$double.eps) {
-    stop("You specified eps less that machine precision.")
+    stop("You specified eps less that machine precision. Please increase value.")
   }
   as.matrix(0)
 }
