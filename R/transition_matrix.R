@@ -7,7 +7,7 @@
 #' @param eps the epsilon parameter
 #' @return The transition matrix
 
-ComputeTransitionMatrix <- function(A, eps = 1e-6) {
+ComputeTransitionMatrix <- function(A, eps = 1e-12) {
   # Check the input parameters
   if (missing(A)) {
     stop("Please provide an aggression matrix as input.")
@@ -16,7 +16,9 @@ ComputeTransitionMatrix <- function(A, eps = 1e-6) {
       stop("A must be a matrix.")
       # TODO(danm0nster): possibly allow for arrays and data frames
     else {
-      if (dim(A)[1] != dim(A)[2]) {
+      rows <- dim(A)[1]
+      cols <- dim(A)[2]
+      if (rows != cols) {
         stop("Aggression matrix must be square.")
       } else if (dim(A)[1] < 2) {
         stop("Aggression matrix dimension must be greater than 1.")
@@ -30,5 +32,13 @@ ComputeTransitionMatrix <- function(A, eps = 1e-6) {
   } else if (eps < .Machine$double.eps) {
     stop("You specified eps less that machine precision. Please increase value.")
   }
-  as.matrix(0)
+  # Checks are done, and input should be fine, so we can move on to the actual computations.
+  ones <- matrix(1, nrow = rows, ncol = rows)
+  ident <- diag(rows)
+  numerator <- A + eps * (ones - ident)
+  row.sum <- rowSums(A)
+  # Repeat this as a column, so each element contains the row sum.
+  denominator <- matrix(rep(row.sum,each = cols), ncol = cols, byrow = TRUE)
+  denominator <- denominator + rows * eps
+  numerator / denominator
 }
