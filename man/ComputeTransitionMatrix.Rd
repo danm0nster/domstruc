@@ -4,12 +4,12 @@
 \alias{ComputeTransitionMatrix}
 \title{Compute the transition matrix.}
 \usage{
-ComputeTransitionMatrix(A, eps = 1e-06)
+ComputeTransitionMatrix(A, eps = 1e-12)
 }
 \arguments{
-\item{A}{aggression matrix}
+\item{A}{aggression matrix (square matrix)}
 
-\item{eps}{the epsilon parameter}
+\item{eps}{the epsilon parameter (0 < eps < 1)}
 }
 \value{
 The transition matrix
@@ -17,4 +17,7 @@ The transition matrix
 \description{
 The transition matrix is computed from the aggression matrix. The element T[i,j] of
 the transition matrix is the probability that individual i attacks individual j.
+}
+\examples{
+ComputeTransitionMatrix(matrix(c(0,2,3,0), nrow = 2, ncol = 2))
 }

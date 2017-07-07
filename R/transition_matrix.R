@@ -3,9 +3,12 @@
 #' The transition matrix is computed from the aggression matrix. The element T[i,j] of
 #' the transition matrix is the probability that individual i attacks individual j.
 #'
-#' @param A aggression matrix
-#' @param eps the epsilon parameter
+#' @param A aggression matrix (square matrix)
+#' @param eps the epsilon parameter (0 < eps < 1)
 #' @return The transition matrix
+#' @examples
+#' ComputeTransitionMatrix(matrix(c(0,2,3,0), nrow = 2, ncol = 2))
+#' @export
 
 ComputeTransitionMatrix <- function(A, eps = 1e-12) {
   # Check the input parameters
@@ -22,6 +25,8 @@ ComputeTransitionMatrix <- function(A, eps = 1e-12) {
         stop("Aggression matrix must be square.")
       } else if (dim(A)[1] < 2) {
         stop("Aggression matrix dimension must be greater than 1.")
+      } else if (sum(diag(A)) != 0) {
+        stop("Aggression matrix has non-zero trace. Self-aggression?")
       }
     }
   }
