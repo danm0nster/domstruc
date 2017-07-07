@@ -4,7 +4,7 @@
 #' the transition matrix is the probability that individual i attacks individual j.
 #'
 #' @param A aggression matrix (square matrix)
-#' @param eps the epsilon parameter (0 < eps < 1)
+#' @param eps the epsilon parameter (0 < eps <= 1)
 #' @return The transition matrix
 #' @examples
 #' ComputeTransitionMatrix(matrix(c(0,2,3,0), nrow = 2, ncol = 2))
@@ -28,6 +28,7 @@ ComputeTransitionMatrix <- function(A, eps = 1e-12) {
       } else if (sum(diag(A)) != 0) {
         stop("Aggression matrix has non-zero trace. Self-aggression?")
       }
+      # TODO(danm0nster): add check for negative matrix elements
     }
   }
   if (eps > 1) {
@@ -44,6 +45,6 @@ ComputeTransitionMatrix <- function(A, eps = 1e-12) {
   row.sum <- rowSums(A)
   # Repeat this as a column, so each element contains the row sum.
   denominator <- matrix(rep(row.sum,each = cols), ncol = cols, byrow = TRUE)
-  denominator <- denominator + rows * eps
+  denominator <- denominator + (rows - 1) * eps
   numerator / denominator
 }
