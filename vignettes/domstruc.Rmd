@@ -2,6 +2,7 @@
 title: "Calculating structural metrics of dominance hierarchies with the `domstruc` package"
 author: "Elizabeth Hobson, Dan Mønster, Simon DeDeo"
 date: "`r Sys.Date()`"
+<!--- output: pdf_document --->
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Vignette Title}
