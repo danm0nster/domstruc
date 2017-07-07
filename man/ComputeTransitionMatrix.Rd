@@ -9,7 +9,7 @@ ComputeTransitionMatrix(A, eps = 1e-12)
 \arguments{
 \item{A}{aggression matrix (square matrix)}
 
-\item{eps}{the epsilon parameter (0 < eps < 1)}
+\item{eps}{the epsilon parameter (0 < eps <= 1)}
 }
 \value{
 The transition matrix
