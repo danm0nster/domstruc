@@ -27,11 +27,16 @@ ComputeTransitionMatrix <- function(A, eps = 1e-12) {
         stop("Aggression matrix dimension must be greater than 1.")
       } else if (sum(diag(A)) != 0) {
         stop("Aggression matrix has non-zero trace. Self-aggression?")
+      } else if (sum(which(A < 0))) {
+        stop("Negative element detected in aggression matrix.")
       }
-      # TODO(danm0nster): add check for negative matrix elements
     }
   }
-  if (eps > 1) {
+  if (!(is.numeric(eps) || is.integer(eps))) {
+    stop("eps must be type numeric or integer")
+  } else if (length(eps) != 1) {
+    stop("eps must be a scalar.")
+  } else if (eps > 1) {
     stop("eps must be less than or equal to 1.")
   } else if (eps < 0) {
     stop("eps must be positive.")
