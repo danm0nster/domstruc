@@ -7,12 +7,17 @@
 containment(trans.mat)
 }
 \arguments{
-\item{trans.mat}{}
+\item{trans.mat}{A transition matrix}
 }
 \value{
 containment
 }
 \description{
-Containment is computed as the second left hand eigenvalue of the transition
-matrix.
+Containment is computed as the second largest absolute eigenvalue of the
+transition matrix.
+}
+\examples{
+trans.mat <- array(c(0,0.5,0.2,1,0,0.8,0,0.5,0), dim = c(3,3))
+containment(trans.mat)
+
 }
