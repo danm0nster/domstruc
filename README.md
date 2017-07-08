@@ -18,6 +18,7 @@ install_github("danm0nster/domstruc")
 
 ## Authors and contributors
 The `domstruc`package is written by
+
 * Elizabeth Hobson
 * Simon DeDeo
 * Dan Mønster
