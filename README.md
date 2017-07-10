@@ -13,6 +13,7 @@ install.packages("devtools")
 library(devtools)
 install_github("danm0nster/domstruc")
 ```
+Note: This may not be possible as long as the repository is private.
 
 ## Overview
 
