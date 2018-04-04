@@ -17,7 +17,7 @@ Containment is computed as the second largest absolute eigenvalue of the
 transition matrix.
 }
 \examples{
-trans.mat <- array(c(0,0.5,0.2,1,0,0.8,0,0.5,0), dim = c(3,3))
+trans.mat <- array(c(0, 0.5, 0.2, 1, 0, 0.8, 0, 0.5, 0), dim = c(3, 3))
 containment(trans.mat)
 
 }
