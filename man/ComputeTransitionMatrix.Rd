@@ -19,5 +19,5 @@ The transition matrix is computed from the aggression matrix. The element T[i,j]
 the transition matrix is the probability that individual i attacks individual j.
 }
 \examples{
-ComputeTransitionMatrix(matrix(c(0,2,3,0), nrow = 2, ncol = 2))
+ComputeTransitionMatrix(matrix(c(0, 2, 3, 0), nrow = 2, ncol = 2))
 }
