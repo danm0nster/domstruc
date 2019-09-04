@@ -41,9 +41,11 @@ TransitionMatrix <- function(A, eps = 1e-12) {
   } else if (eps < 0) {
     stop("eps must be positive.")
   } else if (eps < .Machine$double.eps) {
-    stop("You specified eps less that machine precision. Please increase value.")
+    stop("You specified eps less that machine precision.
+         Please increase value.")
   }
-  # Checks are done, and input should be fine, so we can move on to the actual computations.
+  # Checks are done, and input should be fine,
+  # so we can move on to the actual computations.
   ones <- matrix(1, nrow = rows, ncol = rows)
   ident <- diag(rows)
   numerator <- A + eps * (ones - ident)

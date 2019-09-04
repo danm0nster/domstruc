@@ -4,37 +4,49 @@ library(domstruc)
 context("Transition matrix")
 
 test_that("missing argument gives error", {
-  expect_error(TransitionMatrix(), "Please provide an aggression matrix as input.")
+  expect_error(TransitionMatrix(),
+               "Please provide an aggression matrix as input.")
 })
 
-A.matrix <- matrix(data = c(0, 1, 2, 4, 0, 1, 3, 4, 0), nrow = 3, ncol = 3, byrow = TRUE)
+A.matrix <- matrix(data = c(0, 1, 2, 4, 0, 1, 3, 4, 0),
+                   nrow = 3, ncol = 3, byrow = TRUE)
 
 test_that("wrong argument type raises an error", {
-  expect_error(TransitionMatrix(1), "A must be a matrix.")
-  expect_error(TransitionMatrix(A.matrix, eps = c(0.1, 0.2)), "eps must be a scalar.")
+  expect_error(TransitionMatrix(1),
+               "A must be a matrix.")
+  expect_error(TransitionMatrix(A.matrix, eps = c(0.1, 0.2)),
+               "eps must be a scalar.")
 })
 
 test_that("invalid values of eps gives error", {
-  expect_error(TransitionMatrix(A.matrix, eps = 2), "eps must be less than or equal to 1.")
-  expect_error(TransitionMatrix(A.matrix, eps = -1), "eps must be positive.")
-  expect_error(TransitionMatrix(A.matrix, eps = 1e-100), "You specified eps less that machine precision. Please increase value.")
+  expect_error(TransitionMatrix(A.matrix, eps = 2),
+               "eps must be less than or equal to 1.")
+  expect_error(TransitionMatrix(A.matrix, eps = -1),
+               "eps must be positive.")
+  expect_error(TransitionMatrix(A.matrix, eps = 1e-100),
+               "You specified eps less that machine precision.
+               Please increase value.")
 })
 
 
-non.square.A <- matrix(data = c(1, 2, 3, 4, 5, 6), nrow = 2, ncol = 3)
+non_square_A <- matrix(data = c(1, 2, 3, 4, 5, 6), nrow = 2, ncol = 3)
 
 test_that("matrix dimension is checked", {
-  expect_error(TransitionMatrix(non.square.A), "Aggression matrix must be square.")
-  expect_error(TransitionMatrix(as.matrix(0)), "Aggression matrix dimension must be greater than 1.")
+  expect_error(TransitionMatrix(non_square_A),
+               "Aggression matrix must be square.")
+  expect_error(TransitionMatrix(as.matrix(0)),
+               "Aggression matrix dimension must be greater than 1.")
 })
 
-non.zero.trace.A <- matrix(c(1, 1, 2, 0), nrow = 2, ncol = 2, byrow = TRUE)
+non_zero_trace_A <- matrix(c(1, 1, 2, 0), nrow = 2, ncol = 2, byrow = TRUE)
 
 test_that("non-zero trace is checked", {
-  expect_error(TransitionMatrix(non.zero.trace.A), "Aggression matrix has non-zero trace. Self-aggression?")
+  expect_error(TransitionMatrix(non_zero_trace_A),
+               "Aggression matrix has non-zero trace. Self-aggression?")
 })
 
-# This is a somewhat pathological example since there are only zeros in the last row.
+# This is a somewhat pathological example,
+# since there are only zeros in the last row.
 A.1 <- matrix(c(
   0, 1, 1, 1, 1,
   0, 0, 1, 1, 1,
@@ -62,7 +74,8 @@ T.2 <- matrix(c(
   1 / 2., 1 / 2., 0, 0
 ), nrow = 4, ncol = 4, byrow = TRUE)
 
-# Bromley1991-1.csv, from Dryad data set collected by Shikuza & McDonald
+# Bromley1991-1.csv, from Dryad data set
+# collected by Shikuza & McDonald
 A.4 <- matrix(c(
   0, 7, 2, 13, 10, 2, 4, 0,
   1, 0, 10, 0, 2, 3, 6, 1,
@@ -100,5 +113,6 @@ A.neg <- matrix(1, nrow = 3, ncol = 3)
 diag(A.neg) <- c(0, 0, 0)
 A.neg[1, 2] <- -1
 test_that("negative elements raise an error", {
-  expect_error(TransitionMatrix(A.neg), "Negative element detected in aggression matrix.")
+  expect_error(TransitionMatrix(A.neg),
+               "Negative element detected in aggression matrix.")
 })
