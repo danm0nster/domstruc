@@ -4,70 +4,92 @@ library(domstruc)
 context("Transition matrix")
 
 test_that("missing argument gives error", {
-  expect_error(transition_matrix(),
-               "Please provide an aggression matrix as input.")
+  expect_error(
+    transition_matrix(),
+    "Please provide an aggression matrix as input."
+  )
 })
 
-A.matrix <- matrix(data = c(0, 1, 2, 4, 0, 1, 3, 4, 0),
-                   nrow = 3, ncol = 3, byrow = TRUE)
+a_matrix <- matrix(
+  data = c(0, 1, 2, 4, 0, 1, 3, 4, 0),
+  nrow = 3, ncol = 3, byrow = TRUE
+)
 
 test_that("wrong argument type raises an error", {
-  expect_error(transition_matrix(1),
-               "A must be a matrix.")
-  expect_error(transition_matrix(A.matrix, eps = c(0.1, 0.2)),
-               "eps must be a scalar.")
+  expect_error(
+    transition_matrix(1),
+    "Argument must be a matrix."
+  )
+  expect_error(
+    transition_matrix(a_matrix, eps = c(0.1, 0.2)),
+    "eps must be a scalar."
+  )
 })
 
 test_that("invalid values of eps gives error", {
-  expect_error(transition_matrix(A.matrix, eps = 2),
-               "eps must be less than or equal to 1.")
-  expect_error(transition_matrix(A.matrix, eps = -1),
-               "eps must be positive.")
-  expect_error(transition_matrix(A.matrix, eps = 1e-100),
-               paste0("You specified eps less that machine precision.\n",
-                      "Please increase value."))
+  expect_error(
+    transition_matrix(a_matrix, eps = 2),
+    "eps must be less than or equal to 1."
+  )
+  expect_error(
+    transition_matrix(a_matrix, eps = -1),
+    "eps must be positive."
+  )
+  expect_error(
+    transition_matrix(a_matrix, eps = 1e-100),
+    paste0(
+      "You specified eps less that machine precision.\n",
+      "Please increase value."
+    )
+  )
 })
 
 
-non_square_A <- matrix(data = c(1, 2, 3, 4, 5, 6), nrow = 2, ncol = 3)
+non_square <- matrix(data = c(1, 2, 3, 4, 5, 6), nrow = 2, ncol = 3)
 
 test_that("matrix dimension is checked", {
-  expect_error(transition_matrix(non_square_A),
-               "Aggression matrix must be square.")
-  expect_error(transition_matrix(as.matrix(0)),
-               "Aggression matrix dimension must be greater than 1.")
+  expect_error(
+    transition_matrix(non_square),
+    "Aggression matrix must be square."
+  )
+  expect_error(
+    transition_matrix(as.matrix(0)),
+    "Aggression matrix dimension must be greater than 1."
+  )
 })
 
-non_zero_trace_A <- matrix(c(1, 1, 2, 0), nrow = 2, ncol = 2, byrow = TRUE)
+non_zero_trace <- matrix(c(1, 1, 2, 0), nrow = 2, ncol = 2, byrow = TRUE)
 
 test_that("non-zero trace is checked", {
-  expect_error(transition_matrix(non_zero_trace_A),
-               "Aggression matrix has non-zero trace. Self-aggression?")
+  expect_error(
+    transition_matrix(non_zero_trace),
+    "Aggression matrix has non-zero trace. Self-aggression?"
+  )
 })
 
 # This is a somewhat pathological example,
 # since there are only zeros in the last row.
-A.1 <- matrix(c(
+a_1 <- matrix(c(
   0, 1, 1, 1, 1,
   0, 0, 1, 1, 1,
   0, 0, 0, 1, 1,
   0, 0, 0, 0, 1,
   0, 0, 0, 0, 0
 ), nrow = 5, ncol = 5, byrow = TRUE)
-T.1 <- matrix(c(
+t_1 <- matrix(c(
   0, 1 / 4., 1 / 4., 1 / 4., 1 / 4.,
   0, 0, 1 / 3., 1 / 3., 1 / 3.,
   0, 0, 0, 1 / 2., 1 / 2.,
   0, 0, 0, 0, 1,
   1 / 4., 1 / 4., 1 / 4., 1 / 4., 0
 ), nrow = 5, ncol = 5, byrow = TRUE)
-A.2 <- matrix(c(
+a_2 <- matrix(c(
   0, 1, 2, 3,
   1, 0, 1, 1,
   10, 3, 0, 2,
   5, 5, 0, 0
 ), nrow = 4, ncol = 4, byrow = TRUE)
-T.2 <- matrix(c(
+t_2 <- matrix(c(
   0, 1 / 6., 1 / 3., 1 / 2.,
   1 / 3., 0, 1 / 3., 1 / 3.,
   10 / 15., 3 / 15., 0, 2 / 15.,
@@ -76,7 +98,7 @@ T.2 <- matrix(c(
 
 # Bromley1991-1.csv, from Dryad data set
 # collected by Shikuza & McDonald
-A.4 <- matrix(c(
+a_4 <- matrix(c(
   0, 7, 2, 13, 10, 2, 4, 0,
   1, 0, 10, 0, 2, 3, 6, 1,
   1, 3, 0, 2, 3, 0, 5, 0,
@@ -86,7 +108,7 @@ A.4 <- matrix(c(
   0, 0, 0, 0, 0, 2, 0, 4,
   0, 0, 0, 0, 0, 1, 1, 0
 ), nrow = 8, ncol = 8, byrow = TRUE)
-T.4 <- matrix(c(
+t_4 <- matrix(c(
   0, 0.1842, 0.0526, 0.3421, 0.2632, 0.0526, 0.1053, 0.0000,
   0.0435, 0, 0.4348, 0, 0.0870, 0.1304, 0.2609, 0.0435,
   0.0714, 0.2143, 0, 0.1429, 0.2143, 0, 0.3571, 0.0000,
@@ -97,9 +119,9 @@ T.4 <- matrix(c(
   0, 0, 0, 0, 0, 0.5000, 0.5000, 0.0000
 ), nrow = 8, ncol = 8, byrow = TRUE)
 test_that("output is correct", {
-  expect_equal(transition_matrix(A.1), T.1, tolerance = 1e-4)
-  expect_equal(transition_matrix(A.2), T.2, tolerance = 1e-4)
-  expect_equal(transition_matrix(A.4), T.4, tolerance = 1e-4)
+  expect_equal(transition_matrix(a_1), t_1, tolerance = 1e-4)
+  expect_equal(transition_matrix(a_2), t_2, tolerance = 1e-4)
+  expect_equal(transition_matrix(a_4), t_4, tolerance = 1e-4)
 })
 
 test_that("two-dimensional array (matrix) works", {
@@ -109,10 +131,12 @@ test_that("two-dimensional array (matrix) works", {
   )
 })
 
-A.neg <- matrix(1, nrow = 3, ncol = 3)
-diag(A.neg) <- c(0, 0, 0)
-A.neg[1, 2] <- -1
+a_neg <- matrix(1, nrow = 3, ncol = 3)
+diag(a_neg) <- c(0, 0, 0)
+a_neg[1, 2] <- -1
 test_that("negative elements raise an error", {
-  expect_error(transition_matrix(A.neg),
-               "Negative element detected in aggression matrix.")
+  expect_error(
+    transition_matrix(a_neg),
+    "Negative element detected in aggression matrix."
+  )
 })
