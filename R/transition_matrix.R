@@ -7,10 +7,10 @@
 #' @param eps the epsilon parameter (0 < eps <= 1)
 #' @return The transition matrix
 #' @examples
-#' ComputeTransitionMatrix(matrix(c(0, 2, 3, 0), nrow = 2, ncol = 2))
+#' TransitionMatrix(matrix(c(0, 2, 3, 0), nrow = 2, ncol = 2))
 #' @export
 
-ComputeTransitionMatrix <- function(A, eps = 1e-12) {
+TransitionMatrix <- function(A, eps = 1e-12) {
   # Check the input parameters
   if (missing(A)) {
     stop("Please provide an aggression matrix as input.")
@@ -51,5 +51,5 @@ ComputeTransitionMatrix <- function(A, eps = 1e-12) {
   # Repeat this as a column, so each element contains the row sum.
   denominator <- matrix(rep(row.sum, each = cols), ncol = cols, byrow = TRUE)
   denominator <- denominator + (rows - 1) * eps
-  numerator / denominator
+  return(numerator / denominator)
 }
