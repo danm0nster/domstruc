@@ -7,10 +7,10 @@
 #' @param eps the epsilon parameter (0 < eps <= 1)
 #' @return The transition matrix
 #' @examples
-#' TransitionMatrix(matrix(c(0, 2, 3, 0), nrow = 2, ncol = 2))
+#' transition_matrix(matrix(c(0, 2, 3, 0), nrow = 2, ncol = 2))
 #' @export
 
-TransitionMatrix <- function(A, eps = 1e-12) {
+transition_matrix <- function(A, eps = 1e-12) {
   # Check the input parameters
   if (missing(A)) {
     stop("Please provide an aggression matrix as input.")
@@ -41,8 +41,9 @@ TransitionMatrix <- function(A, eps = 1e-12) {
   } else if (eps < 0) {
     stop("eps must be positive.")
   } else if (eps < .Machine$double.eps) {
-    stop("You specified eps less that machine precision.
-         Please increase value.")
+    error_message <- paste0("You specified eps less that machine precision.\n",
+                            "Please increase value.")
+    stop(error_message)
   }
   # Checks are done, and input should be fine,
   # so we can move on to the actual computations.
