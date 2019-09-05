@@ -119,14 +119,14 @@ t_4 <- matrix(c(
   0, 0, 0, 0, 0, 0.5000, 0.5000, 0.0000
 ), nrow = 8, ncol = 8, byrow = TRUE)
 test_that("output is correct", {
-  expect_equal(transition_matrix(a_1), t_1, tolerance = 1e-4)
-  expect_equal(transition_matrix(a_2), t_2, tolerance = 1e-4)
-  expect_equal(transition_matrix(a_4), t_4, tolerance = 1e-4)
+  expect_equal(transition_matrix(a_1, eps = 1e-12), t_1, tolerance = 1e-4)
+  expect_equal(transition_matrix(a_2, eps = 1e-12), t_2, tolerance = 1e-4)
+  expect_equal(transition_matrix(a_4, eps = 1e-12), t_4, tolerance = 1e-4)
 })
 
 test_that("two-dimensional array (matrix) works", {
   expect_equal(
-    transition_matrix(array(c(0, 1, 2, 0), dim = c(2, 2))),
+    transition_matrix(array(c(0, 1, 2, 0), dim = c(2, 2)), eps = 1e-12),
     array(c(0, 1, 1, 0), dim = c(2, 2))
   )
 })
