@@ -53,10 +53,10 @@ transition_matrix <- function(aggression_matrix, eps = 0.694) {
 #' Check if matrix is a valid aggression matrix
 #'
 #' This is an internal utility function, not exported via NAMESPACE.
+#' Execution will halt if an invalid aggression matrix is found,
+#' and an error message will be printed.
 #'
 #' @param aggression_matrix The aggression matrix to be checked
-#'
-#' @return
 #'
 #' @examples
 #'
