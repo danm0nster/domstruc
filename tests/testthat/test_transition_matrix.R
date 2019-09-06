@@ -21,22 +21,22 @@ test_that("wrong argument type raises an error", {
     "Argument must be a matrix."
   )
   expect_error(
-    transition_matrix(a_matrix, eps = c(0.1, 0.2)),
+    transition_matrix(a_matrix, epsilon = c(0.1, 0.2)),
     "eps must be a scalar."
   )
 })
 
 test_that("invalid values of eps gives error", {
   expect_error(
-    transition_matrix(a_matrix, eps = 2),
+    transition_matrix(a_matrix, epsilon = 2),
     "eps must be less than or equal to 1."
   )
   expect_error(
-    transition_matrix(a_matrix, eps = -1),
+    transition_matrix(a_matrix, epsilon = -1),
     "eps must be positive."
   )
   expect_error(
-    transition_matrix(a_matrix, eps = 1e-100),
+    transition_matrix(a_matrix, epsilon = 1e-100),
     paste0(
       "You specified eps less that machine precision.\n",
       "Please increase value."
@@ -119,14 +119,14 @@ t_4 <- matrix(c(
   0, 0, 0, 0, 0, 0.5000, 0.5000, 0.0000
 ), nrow = 8, ncol = 8, byrow = TRUE)
 test_that("output is correct", {
-  expect_equal(transition_matrix(a_1, eps = 1e-12), t_1, tolerance = 1e-4)
-  expect_equal(transition_matrix(a_2, eps = 1e-12), t_2, tolerance = 1e-4)
-  expect_equal(transition_matrix(a_4, eps = 1e-12), t_4, tolerance = 1e-4)
+  expect_equal(transition_matrix(a_1, epsilon = 1e-12), t_1, tolerance = 1e-4)
+  expect_equal(transition_matrix(a_2, epsilon = 1e-12), t_2, tolerance = 1e-4)
+  expect_equal(transition_matrix(a_4, epsilon = 1e-12), t_4, tolerance = 1e-4)
 })
 
 test_that("two-dimensional array (matrix) works", {
   expect_equal(
-    transition_matrix(array(c(0, 1, 2, 0), dim = c(2, 2)), eps = 1e-12),
+    transition_matrix(array(c(0, 1, 2, 0), dim = c(2, 2)), epsilon = 1e-12),
     array(c(0, 1, 1, 0), dim = c(2, 2))
   )
 })

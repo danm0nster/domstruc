@@ -4,12 +4,12 @@
 \alias{transition_matrix}
 \title{Compute the transition matrix.}
 \usage{
-transition_matrix(aggression_matrix, eps = 0.694)
+transition_matrix(aggression_matrix, epsilon = 0.694)
 }
 \arguments{
 \item{aggression_matrix}{aggression matrix (square matrix)}
 
-\item{eps}{the epsilon parameter (0 < eps <= 1)}
+\item{epsilon}{the epsilon parameter (0 < eps <= 1)}
 }
 \value{
 The transition matrix

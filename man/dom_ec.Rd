@@ -12,7 +12,8 @@ dom_ec(aggression_matrix, epsilon = 0.694)
 \item{epsilon}{Regularization term for computing eigenvalue centrality}
 }
 \value{
-A vector of eigenvalue centrality for each individual in the aggression matrix
+A vector of eigenvalue centrality for each individual in the
+aggression matrix
 }
 \description{
 Compute regularized eigenvalue centrality from aggression matrix matrix.

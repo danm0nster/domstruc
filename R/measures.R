@@ -3,7 +3,8 @@
 #' @param aggression_matrix An aggression matrix
 #' @param epsilon Regularization term for computing eigenvalue centrality
 #'
-#' @return A vector of eigenvalue centrality for each individual in the aggression matrix
+#' @return A vector of eigenvalue centrality for each individual in the
+#' aggression matrix
 #' @export
 #'
 #' @examples
@@ -13,7 +14,8 @@ dom_ec <- function(aggression_matrix, epsilon = 0.694) {
   } else {
     check_aggression_matrix(aggression_matrix)
   }
-  t_mat <- transition_matrix(aggression_matrix, eps = epsilon)
+  check_epsilon(epsilon)
+  t_mat <- transition_matrix(aggression_matrix, epsilon = epsilon)
   # Compute the eigenvalues and eigenvectors of the transpose
   # of the transition matrix (corresponds to the left hand
   # eigenvectors).
