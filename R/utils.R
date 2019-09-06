@@ -40,12 +40,12 @@ transition_matrix <- function(aggression_matrix, eps = 0.694) {
   ones <- matrix(1, nrow = num_rows, ncol = num_rows)
   ident <- diag(num_rows)
   numerator <- aggression_matrix + eps * (ones - ident)
-  row.sum <- rowSums(aggression_matrix)
+  # Compute row sums and normalize by these, so probabilities sum to 1
+  row.sum <- rowSums(numerator)
   # Repeat this as a column, so each element contains the row sum.
   denominator <- matrix(rep(row.sum, each = num_rows),
                         ncol = num_rows,
                         byrow = TRUE)
-  denominator <- denominator + (num_rows - 1) * eps
   return(numerator / denominator)
 }
 
