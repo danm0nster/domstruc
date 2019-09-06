@@ -30,8 +30,9 @@ transition_matrix <- function(aggression_matrix, epsilon = 0.694) {
   row.sum <- rowSums(numerator)
   # Repeat this as a column, so each element contains the row sum.
   denominator <- matrix(rep(row.sum, each = num_rows),
-                        ncol = num_rows,
-                        byrow = TRUE)
+    ncol = num_rows,
+    byrow = TRUE
+  )
   return(numerator / denominator)
 }
 
@@ -69,7 +70,7 @@ check_aggression_matrix <- function(aggression_matrix) {
 #' Check that epsilon is a valid regularization parameter
 #'
 #' This is an internal utility function, not exported via NAMESPACE.
-#' Execution will halt if an invalid aggression matrix is found,
+#' Execution will halt if an invalid regularization parameter is found,
 #' and an error message will be printed.
 #'
 #' @param epsilon
