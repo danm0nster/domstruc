@@ -28,7 +28,7 @@ dom_make_downward_null <- function(aggression_matrix,
   # or below themselves.
   diag(other_above) <- FALSE
   number_below_agent <- matrix(
-    rep(rowSums(is_other_below_agent), each = n),
+    rep(rowSums(other_below), each = n),
     ncol = n,
     byrow = TRUE)
   total_aggression_per_agent <- matrix(
