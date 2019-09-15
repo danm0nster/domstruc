@@ -11,13 +11,15 @@
 #' @export
 #'
 #' @examples
-dom_make_downward_null <- function(aggression_matrix, randomness = 0, epsilon = 0.694) {
+dom_make_downward_null <- function(aggression_matrix,
+                                   randomness = 0,
+                                   epsilon = 0.694) {
   check_aggression_matrix(aggression_matrix)
   check_probability(randomness)
   check_epsilon(epsilon)
   n <- dim(aggression_matrix)[1]
   ec_power <- dom_ec(aggression_matrix, epsilon = epsilon)
-  # Higher EC is lower power. Higher rank is higher
+  # Higher EC is lower power. Higher rank is higher status
   ranks <- order(ec_power)
   # Make pairwise comparisons using the outer product to avoid a loop
   other_below <- outer(ranks[1:n], ranks[1:n], FUN = ">")
@@ -34,6 +36,8 @@ dom_make_downward_null <- function(aggression_matrix, randomness = 0, epsilon = 
     ncol = n,
     byrow = TRUE)
   downward_null_matrix <- matrix(0, nrow = n, ncol = n)
+  # Distribute aggression to those below with probability (1 - randomness)
+  # and distribute the rest among all other agents with probability randomness.
   downward_null_matrix[other_below] <-
     randomness * total_aggression_per_agent[other_below] / n +
     (1 - randomness) * total_aggression_per_agent[other_below] /
@@ -42,4 +46,3 @@ dom_make_downward_null <- function(aggression_matrix, randomness = 0, epsilon = 
     randomness * total_aggression_per_agent[other_above] / n
   return(downward_null_matrix)
 }
-
