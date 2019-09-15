@@ -95,3 +95,26 @@ check_epsilon <- function(epsilon) {
     stop(error_message)
   }
 }
+
+
+#' Check that the argument is a valid probability
+#'
+#' This internal function checks that the argument is a scalar between
+#' zero and one.
+#'
+#' @param p
+#'
+#' @return
+#'
+#' @noRd
+check_probability <- function(p) {
+  if (!(is.numeric(p) || is.integer(p))) {
+    stop("A probability must be type numeric or integer")
+  } else if (length(p) != 1) {
+    stop("A probability must be a scalar.")
+  } else if (p > 1) {
+    stop("A probability must be less than or equal to 1.")
+  } else if (p < 0) {
+    stop("A probability must be positive.")
+  }
+}

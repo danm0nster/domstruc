@@ -2,4 +2,5 @@
 
 export(containment)
 export(dom_ec)
+export(dom_make_downward_null)
 export(transition_matrix)
