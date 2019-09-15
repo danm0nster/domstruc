@@ -19,7 +19,6 @@ dom_make_downward_null <- function(aggression_matrix, randomness = 0, epsilon = 
   ec_power <- dom_ec(aggression_matrix, epsilon = epsilon)
   # Higher EC is lower power. Higher rank is higher
   ranks <- order(ec_power)
-  # rank_lookup <- data.frame(rank = ranks, index = 1:length(ec_power))
   # Make pairwise comparisons using the outer product to avoid a loop
   other_below <- outer(ranks[1:n], ranks[1:n], FUN = ">")
   other_above <- !other_below
