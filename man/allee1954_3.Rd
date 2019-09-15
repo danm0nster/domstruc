@@ -24,6 +24,7 @@ ec_power <- dom_ec(allee1954_3)
 Allee, W. C., and J. C. Dickinson Jr. "Dominance and
   subordination in the smooth dogfish Mustelus canis (Mitchill)."
   Physiological Zoology 27.4 (1954): 356-364.
-  (\href{https://doi.org/10.1086/physzool.27.4.30152372}{The University of Chicago Press})
+  (\href{https://doi.org/10.1086/physzool.27.4.30152372}{The University
+  of Chicago Press})
 }
 \keyword{datasets}
