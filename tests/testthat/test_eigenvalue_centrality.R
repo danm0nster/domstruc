@@ -27,5 +27,5 @@ eigen_vector <- c(0.0700609705868091, 0.05423401782968841, 0.04933214387535999,
 test_that("output is correct", {
   expect_equal(dom_ec(a_matrix, eps = 0.69),
                eigen_vector,
-               tolerance = 1e-1)
+               tolerance = 1e-3)
 })
