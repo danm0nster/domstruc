@@ -19,8 +19,10 @@ dom_make_downward_null <- function(aggression_matrix,
   check_epsilon(epsilon)
   n <- dim(aggression_matrix)[1]
   ec_power <- dom_ec(aggression_matrix, epsilon = epsilon)
-  # Higher EC is lower power. Higher rank is higher status
-  ranks <- order(ec_power)
+  # Higher ec_power is lower power. Higher rank is higher status.
+  # This is tricky: First we sort the indices in decreasing order.
+  # Then we sort these in increasing order to get the rank.
+  ranks <- order(order(ec_power, decreasing = TRUE))
   # Make pairwise comparisons using the outer product to avoid a loop
   other_below <- outer(ranks[1:n], ranks[1:n], FUN = ">")
   other_above <- !other_below
