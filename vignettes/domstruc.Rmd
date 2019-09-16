@@ -1,6 +1,6 @@
 ---
 title: "Calculating structural metrics of dominance hierarchies with the `domstruc` package"
-author: "Elizabeth Hobson, Dan Mønster, Simon DeDeo"
+author: "Dan Mønster, Elizabeth Hobson, Simon DeDeo"
 date: "`r Sys.Date()`"
 <!--- output: pdf_document --->
 output: rmarkdown::html_vignette
@@ -18,7 +18,7 @@ The text below is a boilerplate template. It will eventually be replaced by the 
 Term  | Symbol | variable or function
 ------|------- | --------------------
 Aggression matrix | $A_{ij}$ | 
-Transition matrix | $T_{ij}$ | `CalculateTransitionMatrix()`
+Transition matrix | $T_{ij}$ | `transition_matrix()`
 
 ## Boilerplate template starts here
 Vignettes are long form documentation commonly included in packages. Because they are part of the distribution of the package, they need to be as compact as possible. The `html_vignette` output type provides a custom style sheet (and tweaks some options) to ensure that the resulting html is as small as possible. The `html_vignette` format:
