@@ -2,4 +2,6 @@
 
 export(dom_ec)
 export(dom_make_downward_null)
+export(dom_rank_focused_aggression)
+export(dom_ranks)
 export(transition_matrix)

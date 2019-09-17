@@ -36,6 +36,61 @@ transition_matrix <- function(aggression_matrix, epsilon = 0.694) {
   return(numerator / denominator)
 }
 
+# resample <- function()
+# Other name for focus_list_norm: dom_rank_focused_aggression() (return data.frame with p_delta and diff_count)
+
+
+#' Compute rank focused aggression and number of observation pairs
+#'
+#' @param aggression_matrix aggression matrix (square matrix)
+#' @param epsilon the epsilon parameter (0 < eps <= 1)
+#'
+#' @return A data.frame with columns delta (rank difference), agg (total
+#'   aggression at rank difference delta) and agg_norm (total aggression that
+#'   could have been directed at rank difference delta)
+#' @export
+#'
+#' @examples
+dom_rank_focused_aggression <- function(aggression_matrix, epsilon = 0.694) {
+  check_aggression_matrix(aggression_matrix)
+  check_epsilon(epsilon)
+  n <- dim(aggression_matrix)[1]
+  ec_power <- dom_ec(aggression_matrix, epsilon = epsilon)
+  ranks <- dom_ranks(ec_power)
+  # count the nummber of aggressions at each rank difference
+  delta_rank_ij <- outer(ranks, ranks, FUN = "-")
+  rank_aggression <- data.frame(delta = unique(as.vector(delta_rank_ij)), agg = 0, agg_norm = 0)
+  for (i in 1:n) {
+    for (j in 1:n) {
+      if (i != j) {
+        rank_aggression$agg[rank_aggression$delta == delta_rank_ij[i, j]] <-
+          rank_aggression$agg[rank_aggression$delta == delta_rank_ij[i, j]] +
+          aggression_matrix[i, j]
+        rank_aggression$agg_norm[rank_aggression$delta == delta_rank_ij[i, j]] <-
+          rank_aggression$agg_norm[rank_aggression$delta == delta_rank_ij[i, j]] +
+          sum(aggression_matrix[i, ])
+      }
+    }
+  }
+  return(rank_aggression)
+}
+
+#' Get ranks from a vector of power scores
+#'
+#' @param power A vector of power scores (lower power is higher rank) for each
+#'   agent
+#'
+#' @return A vector of the ranks of each agent
+#' @export
+#'
+#' @examples
+dom_ranks <- function(power) {
+  # TODO: make some checks on the power (vector of more than 1 real elements)
+  # This is tricky: First we sort the indices in decreasing order.
+  # Then we sort these in increasing order to get the rank.
+  # Higher power is lower rank. Higher rank is higher status.
+  return(order(order(power, decreasing = TRUE)))
+}
 
 #' Check if matrix is a valid aggression matrix
 #'
