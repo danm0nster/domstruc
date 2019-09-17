@@ -6,7 +6,7 @@ This R package computes various classic and new measures of dominance hierarchie
 ## Example
 
 ## Installation
-Since this package is not yet on CRAN, you have to install it from GitHub. You can do this by installing the devtools pacakge and then install from GitHub:
+Since this package is not yet on CRAN, you have to install it from GitHub. You can do this by installing the devtools package and then install from GitHub:
 
 ```
 install.packages("devtools")
