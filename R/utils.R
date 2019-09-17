@@ -36,7 +36,43 @@ dom_transition_matrix <- function(aggression_matrix, epsilon = 0.694) {
   return(numerator / denominator)
 }
 
-# resample <- function()
+#' Resample an aggression matrix
+#'
+#' @param aggression_matrix The aggression matrix to be resampled
+#'
+#' @return a new aggression matrix resampled over the probability distribution
+#'   obtained from the original aggression matrix
+#' @export
+#'
+#' @examples
+dom_resample <- function(aggression_matrix) {
+  if (missing(aggression_matrix)) {
+    stop("Please provide an aggression matrix as input.")
+  } else {
+    check_aggression_matrix(aggression_matrix)
+  }
+  dimension <- dim(aggression_matrix)[1]
+  # Construct a matrix that is the probability distribution over all pairs
+  num_attacks <- sum(aggression_matrix)
+  prob <- aggression_matrix / num_attacks
+  # Compute the cumulative probability
+  cumulative <- cumsum(prob)
+  new_matrix <- matrix(0, nrow = dimension, ncol = dimension)
+  # Generate random numbers
+  rnds <- stats::runif(num_attacks)
+  for (p in rnds) {
+    # Find the first element with a cumulative probability larger than p and add
+    # an atttack.
+    #
+    # Alternative: make new_matrix a vector and then reshape to a matrix at the
+    # end. That might be faster.
+    lin_index <- min(which(cumulative > p))
+    r <- ((lin_index - 1) %% dimension) + 1
+    c <- floor((lin_index - 1) / dimension) + 1
+    new_matrix[r, c] <- new_matrix[r, c] + 1
+  }
+  return(new_matrix)
+}
 
 #' Compute rank focused aggression and number of observation pairs
 #'
@@ -57,24 +93,24 @@ dom_rank_focused_aggression <- function(aggression_matrix, epsilon = 0.694) {
   ranks <- dom_ranks(ec_power)
   # count the nummber of aggressions at each rank difference
   delta_rank_ij <- outer(ranks, ranks, FUN = "-")
-  rank_aggression <- data.frame(delta = unique(as.vector(delta_rank_ij)),
+  delta_agg <- data.frame(delta = unique(as.vector(delta_rank_ij)),
                                 agg = 0,
                                 agg_norm = 0)
   for (i in 1:n) {
     for (j in 1:n) {
       if (i != j) {
-        rank_aggression$agg[rank_aggression$delta == delta_rank_ij[i, j]] <-
-          rank_aggression$agg[rank_aggression$delta == delta_rank_ij[i, j]] +
+        delta_agg$agg[delta_agg$delta == delta_rank_ij[i, j]] <-
+          delta_agg$agg[delta_agg$delta == delta_rank_ij[i, j]] +
           aggression_matrix[i, j]
-        rank_aggression$agg_norm[rank_aggression$delta == delta_rank_ij[i, j]] <-
-          rank_aggression$agg_norm[rank_aggression$delta == delta_rank_ij[i, j]] +
+        delta_agg$agg_norm[delta_agg$delta == delta_rank_ij[i, j]] <-
+          delta_agg$agg_norm[delta_agg$delta == delta_rank_ij[i, j]] +
           sum(aggression_matrix[i, ])
       }
     }
   }
   # Remove row with delta == 0
-  rank_aggression <- rank_aggression[rank_aggression$delta != 0, ]
-  return(rank_aggression)
+  delta_agg <- delta_agg[delta_agg$delta != 0, ]
+  return(delta_agg)
 }
 
 #' Get ranks from a vector of power scores
