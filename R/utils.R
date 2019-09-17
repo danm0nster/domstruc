@@ -8,10 +8,10 @@
 #' @param epsilon the epsilon parameter (0 < eps <= 1)
 #' @return The transition matrix
 #' @examples
-#' transition_matrix(matrix(c(0, 2, 3, 0), nrow = 2, ncol = 2))
+#' dom_transition_matrix(matrix(c(0, 2, 3, 0), nrow = 2, ncol = 2))
 #' @export
 
-transition_matrix <- function(aggression_matrix, epsilon = 0.694) {
+dom_transition_matrix <- function(aggression_matrix, epsilon = 0.694) {
   # Check the input parameters
   if (missing(aggression_matrix)) {
     stop("Please provide an aggression matrix as input.")
@@ -37,8 +37,6 @@ transition_matrix <- function(aggression_matrix, epsilon = 0.694) {
 }
 
 # resample <- function()
-# Other name for focus_list_norm: dom_rank_focused_aggression() (return data.frame with p_delta and diff_count)
-
 
 #' Compute rank focused aggression and number of observation pairs
 #'
@@ -59,7 +57,9 @@ dom_rank_focused_aggression <- function(aggression_matrix, epsilon = 0.694) {
   ranks <- dom_ranks(ec_power)
   # count the nummber of aggressions at each rank difference
   delta_rank_ij <- outer(ranks, ranks, FUN = "-")
-  rank_aggression <- data.frame(delta = unique(as.vector(delta_rank_ij)), agg = 0, agg_norm = 0)
+  rank_aggression <- data.frame(delta = unique(as.vector(delta_rank_ij)),
+                                agg = 0,
+                                agg_norm = 0)
   for (i in 1:n) {
     for (j in 1:n) {
       if (i != j) {

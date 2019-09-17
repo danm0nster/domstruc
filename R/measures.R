@@ -15,7 +15,7 @@ dom_ec <- function(aggression_matrix, epsilon = 0.694) {
     check_aggression_matrix(aggression_matrix)
   }
   check_epsilon(epsilon)
-  t_mat <- transition_matrix(aggression_matrix, epsilon = epsilon)
+  t_mat <- dom_transition_matrix(aggression_matrix, epsilon = epsilon)
   # Compute the eigenvalues and eigenvectors of the transpose
   # of the transition matrix (corresponds to the left hand
   # eigenvectors).
