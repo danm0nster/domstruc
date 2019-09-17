@@ -72,6 +72,8 @@ dom_rank_focused_aggression <- function(aggression_matrix, epsilon = 0.694) {
       }
     }
   }
+  # Remove row with delta == 0
+  rank_aggression <- rank_aggression[rank_aggression$delta != 0, ]
   return(rank_aggression)
 }
 
