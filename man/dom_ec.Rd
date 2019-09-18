@@ -2,19 +2,19 @@
 % Please edit documentation in R/measures.R
 \name{dom_ec}
 \alias{dom_ec}
-\title{Compute regularized eigenvalue centrality from aggression matrix matrix.}
+\title{Compute regularized eigenvalue centrality from aggression matrix}
 \usage{
 dom_ec(aggression_matrix, epsilon = 0.694)
 }
 \arguments{
-\item{aggression_matrix}{An aggression matrix}
+\item{aggression_matrix}{An aggression matrix.}
 
-\item{epsilon}{Regularization term for computing eigenvalue centrality}
+\item{epsilon}{Regularization term for computing eigenvalue centrality.}
 }
 \value{
 A vector of eigenvalue centrality for each individual in the
-aggression matrix
+aggression matrix.
 }
 \description{
-Compute regularized eigenvalue centrality from aggression matrix matrix.
+Compute regularized eigenvalue centrality from aggression matrix
 }
