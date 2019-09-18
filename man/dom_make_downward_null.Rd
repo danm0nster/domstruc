@@ -4,14 +4,13 @@
 \alias{dom_make_downward_null}
 \title{Make a downward null model}
 \usage{
-dom_make_downward_null(aggression_matrix, randomness = 0,
-  epsilon = 0.694)
+dom_make_downward_null(aggression_matrix, blur = 0, epsilon = 0.694)
 }
 \arguments{
 \item{aggression_matrix}{An aggression matrix}
 
-\item{randomness}{The probability that an agent randomnly attacks another
-agent. If randomness > 0 is means that the agent deviates from the pure
+\item{blur}{The probability that an agent randomly attacks another
+agent. If blur > 0 is means that the agent deviates from the pure
 downward null heuristic}
 
 \item{epsilon}{Regularization term for computing eigenvalue centrality in the

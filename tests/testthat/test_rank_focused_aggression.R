@@ -76,7 +76,7 @@ pure_down_null_test <-
              agg_norm = pure_down_null_diff_count)
 
 pure_down_null_result <- dom_rank_focused_aggression(
-  dom_make_downward_null(allee1954_3, randomness = 0))
+  dom_make_downward_null(allee1954_3, blur = 0))
 
 # Sort the data.frames by delta rank before comparing to ensure they are in the
 # same order.

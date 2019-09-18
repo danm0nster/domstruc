@@ -1,8 +1,8 @@
 #' Make a downward null model
 #'
 #' @param aggression_matrix An aggression matrix
-#' @param randomness The probability that an agent randomnly attacks another
-#'   agent. If randomness > 0 is means that the agent deviates from the pure
+#' @param blur The probability that an agent randomly attacks another
+#'   agent. If blur > 0 is means that the agent deviates from the pure
 #'   downward null heuristic
 #' @param epsilon Regularization term for computing eigenvalue centrality in the
 #'   model
@@ -12,10 +12,10 @@
 #'
 #' @examples
 dom_make_downward_null <- function(aggression_matrix,
-                                   randomness = 0,
+                                   blur = 0,
                                    epsilon = 0.694) {
   check_aggression_matrix(aggression_matrix)
-  check_probability(randomness)
+  check_probability(blur)
   check_epsilon(epsilon)
   n <- dim(aggression_matrix)[1]
   ec_power <- dom_ec(aggression_matrix, epsilon = epsilon)
@@ -39,10 +39,10 @@ dom_make_downward_null <- function(aggression_matrix,
   # Distribute aggression to those below with probability (1 - randomness)
   # and distribute the rest among all other agents with probability randomness.
   downward_null_matrix[other_below] <-
-    randomness * total_aggression_per_agent[other_below] / n +
-    (1 - randomness) * total_aggression_per_agent[other_below] /
+    blur * total_aggression_per_agent[other_below] / n +
+    (1 - blur) * total_aggression_per_agent[other_below] /
     number_below_agent[other_below]
   downward_null_matrix[other_above] <-
-    randomness * total_aggression_per_agent[other_above] / n
+    blur * total_aggression_per_agent[other_above] / n
   return(downward_null_matrix)
 }

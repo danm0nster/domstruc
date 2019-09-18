@@ -47,12 +47,12 @@ pure_downward_null <- matrix(
 
 
 test_that("Fully random downward null is correct", {
-  expect_equal(dom_make_downward_null(a_matrix, randomness = 1),
+  expect_equal(dom_make_downward_null(a_matrix, blur = 1),
                random_null)
 })
 
 test_that("Pure downward null is correct", {
-  expect_equal(dom_make_downward_null(a_matrix, randomness = 0),
+  expect_equal(dom_make_downward_null(a_matrix, blur = 0),
                pure_downward_null,
                tolerance = 1e-5)
 })
