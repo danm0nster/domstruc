@@ -2,7 +2,9 @@
 
 export(dom_ec)
 export(dom_focus)
+export(dom_make_blur_data)
 export(dom_make_downward_null)
+export(dom_plot_strategy)
 export(dom_position)
 export(dom_rank_focused_aggression)
 export(dom_ranks)
