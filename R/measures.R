@@ -26,13 +26,12 @@ dom_ec <- function(aggression_matrix, epsilon = 0.694) {
   return(abs(evv$vectors[, index_max]) / sum(abs(evv$vectors[, index_max])))
 }
 
-# Next step: implement focus
-#' Title
+#' Compute focus from an aggression matrix
 #'
-#' @param aggression_matrix An aggression matrix
-#' @param epsilon Regularization term for computing eigenvalue centrality
+#' @param aggression_matrix An aggression matrix.
+#' @param epsilon Regularization term for computing eigenvalue centrality.
 #'
-#' @return
+#' @return the computed focus value.
 #' @export
 #'
 #' @examples
