@@ -2,15 +2,18 @@
 % Please edit documentation in R/measures.R
 \name{dom_focus}
 \alias{dom_focus}
-\title{Title}
+\title{Compute focus from an aggression matrix}
 \usage{
 dom_focus(aggression_matrix, epsilon = 0.694)
 }
 \arguments{
-\item{aggression_matrix}{An aggression matrix}
+\item{aggression_matrix}{An aggression matrix.}
 
-\item{epsilon}{Regularization term for computing eigenvalue centrality}
+\item{epsilon}{Regularization term for computing eigenvalue centrality.}
+}
+\value{
+the computed focus value.
 }
 \description{
-Title
+Compute focus from an aggression matrix
 }

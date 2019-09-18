@@ -3,6 +3,7 @@
 export(dom_ec)
 export(dom_focus)
 export(dom_make_downward_null)
+export(dom_position)
 export(dom_rank_focused_aggression)
 export(dom_ranks)
 export(dom_resample)
