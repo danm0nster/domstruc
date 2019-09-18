@@ -1,10 +1,10 @@
-#' Compute regularized eigenvalue centrality from aggression matrix matrix.
+#' Compute regularized eigenvalue centrality from aggression matrix
 #'
-#' @param aggression_matrix An aggression matrix
-#' @param epsilon Regularization term for computing eigenvalue centrality
+#' @param aggression_matrix An aggression matrix.
+#' @param epsilon Regularization term for computing eigenvalue centrality.
 #'
 #' @return A vector of eigenvalue centrality for each individual in the
-#' aggression matrix
+#' aggression matrix.
 #' @export
 #'
 #' @examples
