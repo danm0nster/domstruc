@@ -1,15 +1,6 @@
 library(alphahull)
 library(scales)
 
-# FIXME: Change this ASAP
-# This variable should be passed as argument. Just for testing during development.
-subxfile.real <- data.frame(Focus=0.7010248,
-                            focus_ci_hi=0.7457563,
-                            focus_ci_lo=0.6595914,
-                            Position=0.4536614,
-                            position_ci_hi=0.4946908,
-                            position_ci_lo=0.4116098)
-
 #' Title
 #'
 #' @param blur_data
@@ -18,7 +9,7 @@ subxfile.real <- data.frame(Focus=0.7010248,
 #' @export
 #'
 #' @examples
-dom_plot_strategy <- function(blur_data) {
+dom_plot_strategy <- function(data, blur_data) {
   dev.new(width=8, height=8, unit="in")
 
   subxfile.blur.hFrP <- subset(blur_data,
@@ -100,74 +91,74 @@ dom_plot_strategy <- function(blur_data) {
   #l= "low" end of error bar
 
   # is real data in downward heuristic polygon? (using 4 points of extreme ends of errorbars)
-  PinP.real.rFrP <- point.in.polygon(subxfile.real$Focus, subxfile.real$Position,
+  PinP.real.rFrP <- point.in.polygon(data$focus, data$position,
                                      ahuld.conv$x, ahuld.conv$y,
                                      mode.checked=FALSE)
-  PinP.real.hFrP <- point.in.polygon(subxfile.real$focus_ci_hi, subxfile.real$Position,
+  PinP.real.hFrP <- point.in.polygon(data$focus_ci_hi, data$position,
                                      ahuld.conv$x, ahuld.conv$y,
                                      mode.checked=FALSE)
-  PinP.real.lFrP <- point.in.polygon(subxfile.real$focus_ci_lo, subxfile.real$Position,
+  PinP.real.lFrP <- point.in.polygon(data$focus_ci_lo, data$position,
                                      ahuld.conv$x, ahuld.conv$y,
                                      mode.checked=FALSE)
-  PinP.real.rFhP <- point.in.polygon(subxfile.real$Focus, subxfile.real$position_ci_hi,
+  PinP.real.rFhP <- point.in.polygon(data$focus, data$position_ci_hi,
                                      ahuld.conv$x, ahuld.conv$y,
                                      mode.checked=FALSE)
-  PinP.real.rFlP <- point.in.polygon(subxfile.real$Focus, subxfile.real$position_ci_lo,
+  PinP.real.rFlP <- point.in.polygon(data$focus, data$position_ci_lo,
                                      ahuld.conv$x, ahuld.conv$y,
                                      mode.checked=FALSE)
   point.inorout <- cbind.data.frame(PinP.real.rFrP, PinP.real.hFrP, PinP.real.lFrP, PinP.real.rFhP, PinP.real.rFlP)
 
   # is real data in BULLY polygon? (using 4 points of extreme ends of errorbars)
-  PinP.bully.rFrP <- point.in.polygon(subxfile.real$Focus, subxfile.real$Position,
+  PinP.bully.rFrP <- point.in.polygon(data$focus, data$position,
                                       bully.poly$x, bully.poly$y,
                                       mode.checked=FALSE)
-  PinP.bully.hFrP <- point.in.polygon(subxfile.real$focus_ci_hi, subxfile.real$Position,
+  PinP.bully.hFrP <- point.in.polygon(data$focus_ci_hi, data$position,
                                       bully.poly$x, bully.poly$y,
                                       mode.checked=FALSE)
-  PinP.bully.lFrP <- point.in.polygon(subxfile.real$focus_ci_lo, subxfile.real$Position,
+  PinP.bully.lFrP <- point.in.polygon(data$focus_ci_lo, data$position,
                                       bully.poly$x, bully.poly$y,
                                       mode.checked=FALSE)
-  PinP.bully.rFhP <- point.in.polygon(subxfile.real$Focus, subxfile.real$position_ci_hi,
+  PinP.bully.rFhP <- point.in.polygon(data$focus, data$position_ci_hi,
                                       bully.poly$x, bully.poly$y,
                                       mode.checked=FALSE)
-  PinP.bully.rFlP <- point.in.polygon(subxfile.real$Focus, subxfile.real$position_ci_lo,
+  PinP.bully.rFlP <- point.in.polygon(data$focus, data$position_ci_lo,
                                       bully.poly$x, bully.poly$y,
                                       mode.checked=FALSE)
   point.inorout.bully <- cbind.data.frame(PinP.bully.rFrP, PinP.bully.hFrP, PinP.bully.lFrP, PinP.bully.rFhP, PinP.bully.rFlP)
 
   # is real data in CLOSE COMPETITORS?? (using 4 points of extreme ends of errorbars)
-  PinP.CC.rFrP <- point.in.polygon(subxfile.real$Focus, subxfile.real$Position,
+  PinP.CC.rFrP <- point.in.polygon(data$focus, data$position,
                                    clcomps.poly$x, clcomps.poly$y,
                                    mode.checked=FALSE)
-  PinP.CC.hFrP <- point.in.polygon(subxfile.real$focus_ci_hi, subxfile.real$Position,
+  PinP.CC.hFrP <- point.in.polygon(data$focus_ci_hi, data$position,
                                    clcomps.poly$x, clcomps.poly$y,
                                    mode.checked=FALSE)
-  PinP.CC.lFrP <- point.in.polygon(subxfile.real$focus_ci_lo, subxfile.real$Position,
+  PinP.CC.lFrP <- point.in.polygon(data$focus_ci_lo, data$position,
                                    clcomps.poly$x, clcomps.poly$y,
                                    mode.checked=FALSE)
-  PinP.CC.rFhP <- point.in.polygon(subxfile.real$Focus, subxfile.real$position_ci_hi,
+  PinP.CC.rFhP <- point.in.polygon(data$focus, data$position_ci_hi,
                                    clcomps.poly$x, clcomps.poly$y,
                                    mode.checked=FALSE)
-  PinP.CC.rFlP <- point.in.polygon(subxfile.real$Focus, subxfile.real$position_ci_lo,
+  PinP.CC.rFlP <- point.in.polygon(data$focus, data$position_ci_lo,
                                    clcomps.poly$x, clcomps.poly$y,
                                    mode.checked=FALSE)
   point.inorout.CC <- cbind.data.frame(PinP.CC.rFrP, PinP.CC.hFrP, PinP.CC.lFrP, PinP.CC.rFhP, PinP.CC.rFlP)
 
 
   # is real data in UNDEFINED?? (using 4 points of extreme ends of errorbars)
-  PinP.UND.rFrP <- point.in.polygon(subxfile.real$Focus, subxfile.real$Position,
+  PinP.UND.rFrP <- point.in.polygon(data$focus, data$position,
                                     undef.poly$x, undef.poly$y,
                                     mode.checked=FALSE)
-  PinP.UND.hFrP <- point.in.polygon(subxfile.real$focus_ci_hi, subxfile.real$Position,
+  PinP.UND.hFrP <- point.in.polygon(data$focus_ci_hi, data$position,
                                     undef.poly$x, undef.poly$y,
                                     mode.checked=FALSE)
-  PinP.UND.lFrP <- point.in.polygon(subxfile.real$focus_ci_lo, subxfile.real$Position,
+  PinP.UND.lFrP <- point.in.polygon(data$focus_ci_lo, data$position,
                                     undef.poly$x, undef.poly$y,
                                     mode.checked=FALSE)
-  PinP.UND.rFhP <- point.in.polygon(subxfile.real$Focus, subxfile.real$position_ci_hi,
+  PinP.UND.rFhP <- point.in.polygon(data$focus, data$position_ci_hi,
                                     undef.poly$x, undef.poly$y,
                                     mode.checked=FALSE)
-  PinP.UND.rFlP <- point.in.polygon(subxfile.real$Focus, subxfile.real$position_ci_lo,
+  PinP.UND.rFlP <- point.in.polygon(data$focus, data$position_ci_lo,
                                     undef.poly$x, undef.poly$y,
                                     mode.checked=FALSE)
 
@@ -184,21 +175,21 @@ dom_plot_strategy <- function(blur_data) {
 
   ##########################PLOT
   #plot real data
-  with(subxfile.real, plot(Focus, Position,
+  with(data, plot(focus, position,
                            ylim=c(-0.1,1), xlim=c(-0.1,1), las=1,
                            col="blue", pch=5,
-                           xlab="Focus", ylab="Position"))
+                           xlab="focus", ylab="position"))
 
   #plot error around real data
 
   #horizontal focus error, at real position
-  graphics::segments(x0=subxfile.real$focus_ci_lo, x1=subxfile.real$focus_ci_hi,
-           y0=subxfile.real$Position, y1=subxfile.real$Position,
+  graphics::segments(x0=data$focus_ci_lo, x1=data$focus_ci_hi,
+           y0=data$position, y1=data$position,
            col=scales::alpha("blue", 0.7), lwd=1.5)
 
   #vertical position error, at real focus
-  graphics::segments(x0=subxfile.real$Focus, x1=subxfile.real$Focus,
-           y0=subxfile.real$position_ci_lo, y1=subxfile.real$position_ci_hi,
+  graphics::segments(x0=data$focus, x1=data$focus,
+           y0=data$position_ci_lo, y1=data$position_ci_hi,
            col=scales::alpha("blue", 0.7), lwd=1.5)
 
   #plot line for increasingly blurred downward heuristic
@@ -225,10 +216,10 @@ dom_plot_strategy <- function(blur_data) {
 
   ########## plot showing strategy polygons
   #plot real data
-  with(subxfile.real, plot(Focus, Position,
+  with(data, plot(focus, position,
                            ylim=c(-0.1,1), xlim=c(-0.1,1), las=1,
                            col="blue", pch=5,
-                           xlab="Focus", ylab="Position"))
+                           xlab="focus", ylab="position"))
 
   # Add strategy polygons to bottom plotted layer
   #undefined (light grey)
@@ -278,15 +269,15 @@ dom_plot_strategy <- function(blur_data) {
   # add real data
 
   #horizontal focus error, at real position
-  graphics::segments(x0=subxfile.real$focus_ci_lo, x1=subxfile.real$focus_ci_hi,
-           y0=subxfile.real$Position, y1=subxfile.real$Position,
+  graphics::segments(x0=data$focus_ci_lo, x1=data$focus_ci_hi,
+           y0=data$position, y1=data$position,
            col=scales::alpha("blue", 0.7), lwd=2)
 
   #vertical position error, at real focus
-  graphics::segments(x0=subxfile.real$Focus, x1=subxfile.real$Focus,
-           y0=subxfile.real$position_ci_lo, y1=subxfile.real$position_ci_hi,
+  graphics::segments(x0=data$focus, x1=data$focus,
+           y0=data$position_ci_lo, y1=data$position_ci_hi,
            col=scales::alpha("blue", 0.7), lwd=2)
 
-  with(subxfile.real, points(Focus, Position, col="white", bg = "blue", pch=23, cex=1.75))
+  with(data, points(focus, position, col="white", bg = "blue", pch=23, cex=1.75))
 
 }

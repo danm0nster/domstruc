@@ -4,7 +4,7 @@
 \alias{dom_plot_strategy}
 \title{Title}
 \usage{
-dom_plot_strategy(blur_data)
+dom_plot_strategy(data, blur_data)
 }
 \arguments{
 \item{blur_data}{}
