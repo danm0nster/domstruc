@@ -61,3 +61,45 @@ dom_make_blur_data <- function(aggression_matrix,
   }
   return(blur_data)
 }
+
+
+#' Compute bootstrap estimates of focus and position for aggression matrix
+#'
+#' @param aggression_matrix An aggression matrix.
+#' @param replications The number of bootstrap replications.
+#' @param epsilon The regularization parameter for computing eigenvalue centrality.
+#'
+#' @return
+#' @export
+#'
+#' @examples
+dom_make_data <- function(aggression_matrix,
+                          replications = 100,
+                          epsilon = 0.694) {
+  data <- data.frame(focus = 0,
+                     focus_ci_hi = 0,
+                     focus_ci_lo = 0,
+                     position = 0,
+                     position_ci_hi = 0,
+                     position_ci_lo = 0)
+  focus_vec <- replicate(replications,
+                         dom_focus(
+                               dom_resample(aggression_matrix),
+                               epsilon = epsilon))
+  position_vec <- replicate(replications,
+                            dom_position(
+                                  dom_resample(aggression_matrix),
+                                  epsilon = epsilon))
+  foc_mean <- mean(focus_vec)
+  foc_sd <- sd(focus_vec)
+  pos_mean <- mean(position_vec)
+  pos_sd <- sd(position_vec)
+  data$focus <- foc_mean
+  # FIXME: change these to CI instead of std. dev.
+  data$focus_ci_hi <- foc_mean + foc_sd
+  data$focus_ci_lo <- foc_mean - foc_sd
+  data$position <- pos_mean
+  data$position_ci_hi <- pos_mean + pos_sd
+  data$position_ci_lo <- pos_mean - pos_sd
+  return(data)
+}
