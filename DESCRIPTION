@@ -18,5 +18,7 @@ Suggests: testthat,
     knitr,
     rmarkdown,
     lintr
+Imports: alphahull,
+    maptools
 VignetteBuilder: knitr
 RoxygenNote: 6.1.1
