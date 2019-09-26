@@ -12,9 +12,10 @@ dom_rank_focused_aggression(aggression_matrix, epsilon = 0.694)
 \item{epsilon}{the epsilon parameter (0 < eps <= 1)}
 }
 \value{
-A data.frame with columns delta (rank difference), agg (total
-  aggression at rank difference delta) and agg_norm (total aggression that
-  could have been directed at rank difference delta)
+A data.frame with columns delta (rank difference), r_delta (rank
+  focused aggression), agg (total aggression at rank difference delta) and
+  agg_norm (total aggression that could have been directed at rank difference
+  delta).
 }
 \description{
 Compute rank focused aggression and number of observation pairs

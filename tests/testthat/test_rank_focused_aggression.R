@@ -75,6 +75,11 @@ pure_down_null_test <-
              agg = pure_down_null_diff,
              agg_norm = pure_down_null_diff_count)
 
+pure_down_null_test$r_delta <- 0
+pure_down_null_test$r_delta[pure_down_null_test$agg_norm != 0] <-
+  pure_down_null_test$agg[pure_down_null_test$agg_norm != 0] /
+  pure_down_null_test$agg_norm[pure_down_null_test$agg_norm != 0]
+
 pure_down_null_result <- dom_rank_focused_aggression(
   dom_make_downward_null(allee1954_3, blur = 0))
 

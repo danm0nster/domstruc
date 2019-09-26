@@ -79,9 +79,10 @@ dom_resample <- function(aggression_matrix) {
 #' @param aggression_matrix aggression matrix (square matrix)
 #' @param epsilon the epsilon parameter (0 < eps <= 1)
 #'
-#' @return A data.frame with columns delta (rank difference), agg (total
-#'   aggression at rank difference delta) and agg_norm (total aggression that
-#'   could have been directed at rank difference delta)
+#' @return A data.frame with columns delta (rank difference), r_delta (rank
+#'   focused aggression), agg (total aggression at rank difference delta) and
+#'   agg_norm (total aggression that could have been directed at rank difference
+#'   delta).
 #' @export
 #'
 #' @examples
@@ -110,6 +111,11 @@ dom_rank_focused_aggression <- function(aggression_matrix, epsilon = 0.694) {
   }
   # Remove row with delta == 0
   delta_agg <- delta_agg[delta_agg$delta != 0, ]
+  # Add a column with rank focused aggression r_delta.
+  delta_agg$r_delta <- 0
+  # If agg_norm (and hence agg) are zero r_delta is zero.
+  delta_agg$r_delta[delta_agg$agg_norm != 0] <- delta_agg$agg[delta_agg$agg_norm != 0] /
+    delta_agg$agg_norm[delta_agg$agg_norm != 0]
   return(delta_agg)
 }
 

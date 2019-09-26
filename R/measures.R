@@ -46,14 +46,11 @@ dom_focus <- function(aggression_matrix, epsilon = 0.694) {
   focused_agg <- dom_rank_focused_aggression(aggression_matrix, epsilon = epsilon)
   # Compute the necessary terms for focus as new columns in the data frame
   focused_agg$focus_terms <- 0
-  focused_agg$norm_terms <- 0
   # Select the rows where agg_norm is non-zero
   idx <- focused_agg$agg_norm > 0
   focused_agg$focus_terms[idx] <- focused_agg$delta[idx] *
     focused_agg$agg[idx] / focused_agg$agg_norm[idx]
-  focused_agg$norm_terms[idx] <- focused_agg$agg[idx] /
-    focused_agg$agg_norm[idx]
-  denom <- sum(focused_agg$norm_terms)
+  denom <- sum(focused_agg$r_delta)
   mu <- sum(focused_agg$focus_terms) / denom
   focused_agg$focus_var <- 0
   focused_agg$focus_var[idx] <- focused_agg$agg[idx] *
