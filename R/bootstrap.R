@@ -76,6 +76,7 @@ dom_make_blur_data <- function(aggression_matrix,
 dom_make_data <- function(aggression_matrix,
                           replications = 100,
                           epsilon = 0.694) {
+  # Set up a data frame to hold the results
   data <- data.frame(focus = 0,
                      focus_ci_hi = 0,
                      focus_ci_lo = 0,
@@ -90,16 +91,31 @@ dom_make_data <- function(aggression_matrix,
                             dom_position(
                                   dom_resample(aggression_matrix),
                                   epsilon = epsilon))
+  # Find the bootstrap estimate of focus as the mean of the bootstrapped samples
   foc_mean <- mean(focus_vec)
   foc_sd <- sd(focus_vec)
+  # Compute the focus of the un-resampled aggression matrix to correct for bootstrap bias
+  focus_raw <- dom_focus(aggression_matrix, epsilon = epsilon)
+  # Bootstrap estimate of the bias
+  focus_bias <-  focus_raw - foc_mean
+  # Correct for bias
+  focus_estimate <- focus_raw + focus_bias
+  focus_sd_estimate <- sd(focus_vec + focus_bias)
+
+  # Correct position in the same way
   pos_mean <- mean(position_vec)
   pos_sd <- sd(position_vec)
-  data$focus <- foc_mean
+  position_raw <- dom_position(aggression_matrix, epsilon = epsilon)
+  position_bias <- position_raw - pos_mean
+  position_estimate <- position_raw + position_bias
+  position_sd_estimate <- sd(position_vec + position_bias)
+
+  data$focus <- focus_estimate
   # FIXME: change these to CI instead of std. dev.
-  data$focus_ci_hi <- foc_mean + foc_sd
-  data$focus_ci_lo <- foc_mean - foc_sd
-  data$position <- pos_mean
-  data$position_ci_hi <- pos_mean + pos_sd
-  data$position_ci_lo <- pos_mean - pos_sd
+  data$focus_ci_hi <- focus_estimate + position_sd_estimate
+  data$focus_ci_lo <- focus_estimate - position_sd_estimate
+  data$position <- position_estimate
+  data$position_ci_hi <- position_estimate + position_sd_estimate  #position_hi
+  data$position_ci_lo <- position_estimate - position_sd_estimate  # position_lo
   return(data)
 }
