@@ -4,14 +4,15 @@
 #' @param aggression_matrix An aggression matrix.
 #' @param blur_values A vector of blur values to use in the downward null model.
 #' @param replications The number of bootstrap replications.
-#' @param epsilon The regularization parameter for computing eigenvalue centrality.
+#' @param epsilon The regularization parameter for computing eigenvalue
+#'   centrality.
 #'
 #' @return Returns a data frame with columns `blur`, `focus`, `position`
 #' @export
 #'
 #' @examples
 dom_make_blur_data <- function(aggression_matrix,
-                               blur_values = 0:10/10,
+                               blur_values = 0:10 / 10,
                                replications = 100,
                                epsilon = 0.694) {
   if (missing(aggression_matrix)) {
@@ -47,6 +48,7 @@ dom_make_blur_data <- function(aggression_matrix,
                                     dom_resample(aggression_matrix),
                                     blur = b,
                                     epsilon = epsilon))))
+    # TODO: Correct for bootstrap bias
     foc_mean <- mean(focus_vec)
     foc_sd <- sd(focus_vec)
     pos_mean <- mean(position_vec)
@@ -67,7 +69,8 @@ dom_make_blur_data <- function(aggression_matrix,
 #'
 #' @param aggression_matrix An aggression matrix.
 #' @param replications The number of bootstrap replications.
-#' @param epsilon The regularization parameter for computing eigenvalue centrality.
+#' @param epsilon The regularization parameter for computing eigenvalue
+#'   centrality.
 #'
 #' @return
 #' @export
@@ -91,16 +94,10 @@ dom_make_data <- function(aggression_matrix,
                             dom_position(
                                   dom_resample(aggression_matrix),
                                   epsilon = epsilon))
-  # Find the bootstrap estimate of focus as the mean of the bootstrapped samples
-  foc_mean <- mean(focus_vec)
-  foc_sd <- sd(focus_vec)
-  # Compute the focus of the un-resampled aggression matrix to correct for bootstrap bias
+  # Compute the focus of the un-resampled aggression matrix to correct for
+  # bootstrap bias
   focus_raw <- dom_focus(aggression_matrix, epsilon = epsilon)
-  # Bootstrap estimate of the bias
-  focus_bias <-  focus_raw - foc_mean
-  # Correct for bias
-  focus_estimate <- focus_raw + focus_bias
-  focus_sd_estimate <- sd(focus_vec + focus_bias)
+  bias_corrected_focus <- correct_bootstrap_bias(focus_vec, focus_raw)
 
   # Correct position in the same way
   pos_mean <- mean(position_vec)
@@ -109,13 +106,37 @@ dom_make_data <- function(aggression_matrix,
   position_bias <- position_raw - pos_mean
   position_estimate <- position_raw + position_bias
   position_sd_estimate <- sd(position_vec + position_bias)
+  bias_corrected_position <- correct_bootstrap_bias(position_vec, position_raw)
 
-  data$focus <- focus_estimate
   # FIXME: change these to CI instead of std. dev.
-  data$focus_ci_hi <- focus_estimate + position_sd_estimate
-  data$focus_ci_lo <- focus_estimate - position_sd_estimate
-  data$position <- position_estimate
-  data$position_ci_hi <- position_estimate + position_sd_estimate  #position_hi
-  data$position_ci_lo <- position_estimate - position_sd_estimate  # position_lo
+  data$focus <- bias_corrected_focus["mean"]
+  data$focus_ci_hi <- bias_corrected_focus["high"]
+  data$focus_ci_lo <- bias_corrected_focus["low"]
+
+  data$position <- bias_corrected_position["mean"]
+  data$position_ci_hi <- bias_corrected_position["high"]
+  data$position_ci_lo <- bias_corrected_position["low"]
   return(data)
+}
+
+#' Correct for bootstrap bias in mean and hi and low estimates
+#'
+#' @param bs_values A vector of bootstrap estimates to be corrected
+#' @param raw_mean The "raw" mean of the measure to be corrected, i.e., not the
+#'   bootsrapped estimate of the mean.
+#'
+#' @return named vector with corrected "mean", "high" (upper CI limit), "low"
+#'   (lower CI limit)
+#'
+correct_bootstrap_bias <- function(bs_values, raw_mean) {
+  # Find the bootstrap estimate the mean
+  bs_mean <- mean(bs_values)
+  # Bootstrap estimate of the bias
+  bs_bias <-  raw_mean - bs_mean
+  # Correct for bias
+  corrected_mean <- raw_mean + bs_bias
+  corrected_sd_estimate <- sd(bs_values + bs_bias)
+  return(c(mean = corrected_mean,
+           high = corrected_mean + corrected_sd_estimate,
+           low = corrected_mean - corrected_sd_estimate))
 }
