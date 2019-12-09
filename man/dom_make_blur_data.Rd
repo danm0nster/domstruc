@@ -5,8 +5,12 @@
 \title{Compute bootstrap estimates of focus and position for the downward null model
 with confidence intervals}
 \usage{
-dom_make_blur_data(aggression_matrix, blur_values = 0:10/10,
-  replications = 100, epsilon = 0.694)
+dom_make_blur_data(
+  aggression_matrix,
+  blur_values = 0:10/10,
+  replications = 100,
+  epsilon = 0.694
+)
 }
 \arguments{
 \item{aggression_matrix}{An aggression matrix.}
@@ -15,7 +19,8 @@ dom_make_blur_data(aggression_matrix, blur_values = 0:10/10,
 
 \item{replications}{The number of bootstrap replications.}
 
-\item{epsilon}{The regularization parameter for computing eigenvalue centrality.}
+\item{epsilon}{The regularization parameter for computing eigenvalue
+centrality.}
 }
 \value{
 Returns a data frame with columns `blur`, `focus`, `position`

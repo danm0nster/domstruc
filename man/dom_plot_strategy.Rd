@@ -9,6 +9,9 @@ dom_plot_strategy(data, blur_data)
 \arguments{
 \item{blur_data}{}
 }
+\value{
+
+}
 \description{
 Title
 }

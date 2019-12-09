@@ -114,7 +114,8 @@ dom_rank_focused_aggression <- function(aggression_matrix, epsilon = 0.694) {
   # Add a column with rank focused aggression r_delta.
   delta_agg$r_delta <- 0
   # If agg_norm (and hence agg) are zero r_delta is zero.
-  delta_agg$r_delta[delta_agg$agg_norm != 0] <- delta_agg$agg[delta_agg$agg_norm != 0] /
+  delta_agg$r_delta[delta_agg$agg_norm != 0] <-
+    delta_agg$agg[delta_agg$agg_norm != 0] /
     delta_agg$agg_norm[delta_agg$agg_norm != 0]
   return(delta_agg)
 }

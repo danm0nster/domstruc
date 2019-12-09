@@ -85,8 +85,10 @@ pure_down_null_result <- dom_rank_focused_aggression(
 
 # Sort the data.frames by delta rank before comparing to ensure they are in the
 # same order.
-pure_down_null_result <- pure_down_null_result[order(pure_down_null_result$delta), ]
-pure_down_null_test <- pure_down_null_test[order(pure_down_null_test$delta), ]
+pure_down_null_result <-
+    pure_down_null_result[order(pure_down_null_result$delta), ]
+pure_down_null_test <-
+  pure_down_null_test[order(pure_down_null_test$delta), ]
 
 # Reset the row names so the test does not fail because they differ
 rownames(pure_down_null_result) <- NULL

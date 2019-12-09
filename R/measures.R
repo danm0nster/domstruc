@@ -43,7 +43,8 @@ dom_focus <- function(aggression_matrix, epsilon = 0.694) {
   }
   check_epsilon(epsilon)
   # Compute rank focused aggression
-  focused_agg <- dom_rank_focused_aggression(aggression_matrix, epsilon = epsilon)
+  focused_agg <- dom_rank_focused_aggression(aggression_matrix,
+                                             epsilon = epsilon)
   # Compute the necessary terms for focus as new columns in the data frame
   focused_agg$focus_terms <- 0
   # Select the rows where agg_norm is non-zero
@@ -64,7 +65,8 @@ dom_focus <- function(aggression_matrix, epsilon = 0.694) {
 #' @param aggression_matrix An aggression matrix.
 #' @param epsilon Regularization term for computing eigenvalue centrality.
 #'
-#' @return The position, i.e. the relative rank difference where the aggression is most focused.
+#' @return The position, i.e. the relative rank difference where the aggression
+#'   is most focused.
 #' @export
 #'
 #' @examples
@@ -76,12 +78,13 @@ dom_position <- function(aggression_matrix, epsilon = 0.694) {
   }
   check_epsilon(epsilon)
   # Compute rank focused aggression
-  focused_agg <- dom_rank_focused_aggression(aggression_matrix, epsilon = epsilon)
+  focused_agg <- dom_rank_focused_aggression(aggression_matrix,
+                                             epsilon = epsilon)
   tiny <- 1e-12
   # Calculate the terms needed to compute position
   focused_agg$fraction <- focused_agg$delta * focused_agg$agg /
     (focused_agg$agg_norm + tiny)
   focused_agg$norm <- focused_agg$agg / (focused_agg$agg_norm + tiny)
   n <- dim(aggression_matrix)[1]
-  return( mean(focused_agg$fraction) / mean(focused_agg$norm) / n)
+  return(mean(focused_agg$fraction) / mean(focused_agg$norm) / n)
 }

@@ -12,7 +12,8 @@ dom_position(aggression_matrix, epsilon = 0.694)
 \item{epsilon}{Regularization term for computing eigenvalue centrality.}
 }
 \value{
-The position, i.e. the relative rank difference where the aggression is most focused.
+The position, i.e. the relative rank difference where the aggression
+  is most focused.
 }
 \description{
 Compute position from an aggression matrix

@@ -11,7 +11,11 @@ dom_make_data(aggression_matrix, replications = 100, epsilon = 0.694)
 
 \item{replications}{The number of bootstrap replications.}
 
-\item{epsilon}{The regularization parameter for computing eigenvalue centrality.}
+\item{epsilon}{The regularization parameter for computing eigenvalue
+centrality.}
+}
+\value{
+
 }
 \description{
 Compute bootstrap estimates of focus and position for aggression matrix
