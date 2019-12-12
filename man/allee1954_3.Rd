@@ -4,7 +4,7 @@
 \name{allee1954_3}
 \alias{allee1954_3}
 \title{Allee1954-3 data set}
-\format{An 10x10 aggression matrix}
+\format{A 10 x 10 aggression matrix}
 \source{
 \href{https://datadryad.org/resource/doi:10.5061/dryad.f76f2}{Shizuka
   D, McDonald DB (2015) Data from: The network motif architecture of

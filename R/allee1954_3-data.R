@@ -6,7 +6,7 @@
 #'
 #' @usage data(allee1954_3)
 #'
-#' @format An 10x10 aggression matrix
+#' @format A 10 x 10 aggression matrix
 #'
 #' @keywords datasets
 #'
