@@ -13,11 +13,7 @@ dom_plot_strategy <- function(data, blur_data) {
   dev.new(width = 8, height = 8, unit = "in")
   # Get convex hull of blur data with error bars
   ahuld.conv <- convex_hull(blur_data)
-
-
-
   # names(polyinVout)
-
   # combine and save point and poly data
   # DM: rbind not needed
   # SUMM.point.topoly <- rbind(SUMM.point.topoly, polyinVout)
@@ -165,4 +161,47 @@ dom_plot_strategy <- function(data, blur_data) {
 
   with(data, points(focus, position, col = "white", bg = "blue",
                     pch = 23, cex = 1.75))
+}
+
+#' Categorize group-level strategy
+#'
+#' @param data
+#' @param blur_data
+#'
+#' @return String containing the name of the strategy used in the group.
+#' @export
+#'
+#' @examples
+dom_categorize_strategy <- function(data, blur_data) {
+  ahuld.conv <- convex_hull(blur_data)
+  SUMM.point.topoly <- point_inside_polygon(data, blur_data, ahuld.conv)
+  polygons <- make_polygons(data, blur_data)
+  bully.poly <- polygons[["bully"]]
+  clcomps.poly <- polygons[["clcomps"]]
+  undef.poly <- polygons[["undef"]]
+
+  # real data in downward heuristic?
+  SUMM.point.topoly$datalocVSheuristic.DH.nIN <- SUMM.point.topoly$PinP.real.hFrP+SUMM.point.topoly$PinP.real.lFrP+SUMM.point.topoly$PinP.real.rFhP+SUMM.point.topoly$PinP.real.rFlP
+
+  # real data in bully?
+  SUMM.point.topoly$datalocVSheuristic.BU.nIN <- SUMM.point.topoly$PinP.bully.hFrP+SUMM.point.topoly$PinP.bully.lFrP+SUMM.point.topoly$PinP.bully.rFhP+SUMM.point.topoly$PinP.bully.rFlP
+
+  # real data in close completitors?
+  SUMM.point.topoly$datalocVSheuristic.CC.nIN <- SUMM.point.topoly$PinP.CC.hFrP+SUMM.point.topoly$PinP.CC.lFrP+SUMM.point.topoly$PinP.CC.rFhP+SUMM.point.topoly$PinP.CC.rFlP
+
+  # real data in undefined?
+  SUMM.point.topoly$datalocVSheuristic.UN.nIN <- SUMM.point.topoly$PinP.UND.hFrP+SUMM.point.topoly$PinP.UND.lFrP+SUMM.point.topoly$PinP.UND.rFhP+SUMM.point.topoly$PinP.UND.rFlP
+
+
+  SUMM.point.topoly$strategy <- "xx"
+  SUMM.point.topoly$strategy[SUMM.point.topoly$datalocVSheuristic.DH.nIN>0] <- "downward.heuristic"
+  SUMM.point.topoly$strategy[SUMM.point.topoly$datalocVSheuristic.DH.nIN==0 & SUMM.point.topoly$datalocVSheuristic.BU.nIN==4] <- "pure.bully"
+  SUMM.point.topoly$strategy[SUMM.point.topoly$datalocVSheuristic.DH.nIN==0 & SUMM.point.topoly$datalocVSheuristic.CC.nIN==4] <- "pure.close.competitors"
+  SUMM.point.topoly$strategy[SUMM.point.topoly$datalocVSheuristic.DH.nIN==0 & SUMM.point.topoly$datalocVSheuristic.BU.nIN>0 & SUMM.point.topoly$datalocVSheuristic.CC.nIN>0] <- "mixed.strategies"
+  SUMM.point.topoly$strategy[SUMM.point.topoly$datalocVSheuristic.DH.nIN==0 & SUMM.point.topoly$datalocVSheuristic.BU.nIN==0 & SUMM.point.topoly$datalocVSheuristic.CC.nIN==0] <- "pure.undefined"
+  SUMM.point.topoly$strategy[SUMM.point.topoly$datalocVSheuristic.DH.nIN==0 & SUMM.point.topoly$datalocVSheuristic.BU.nIN==3] <- "mostly.bully"
+  SUMM.point.topoly$strategy[SUMM.point.topoly$datalocVSheuristic.DH.nIN==0 & SUMM.point.topoly$datalocVSheuristic.CC.nIN==3] <- "mostly.close.competitors"
+  SUMM.point.topoly$strategy[SUMM.point.topoly$datalocVSheuristic.DH.nIN==0 & SUMM.point.topoly$datalocVSheuristic.UN.nIN==3] <- "mostly.undefined"
+
+  return(SUMM.point.topoly$strategy)
 }
