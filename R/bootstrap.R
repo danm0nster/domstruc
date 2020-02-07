@@ -53,15 +53,18 @@ dom_make_blur_data <- function(aggression_matrix,
     null_aggression_matrix <- dom_make_downward_null(aggression_matrix, blur = b, epsilon = epsilon)
     # Set the confidence level for the confidence interval
     one_sigma <- 0.6826895
+    one_sigma <- 0.95
 
     focus_raw <- dom_focus(null_aggression_matrix, epsilon = epsilon)
     focus_ci <- bootstrap_ci(focus_vec, focus_raw,
-                                         conf_level = one_sigma,
-                                         correction = FALSE)
+                             conf_level = one_sigma,
+                             correction = FALSE,
+                             recenter = FALSE)
     position_raw <- dom_position(null_aggression_matrix, epsilon = epsilon)
     position_ci <- bootstrap_ci(position_vec, position_raw,
-                                            conf_level = one_sigma,
-                                            correction = FALSE)
+                                conf_level = one_sigma,
+                                correction = FALSE,
+                                recenter = FALSE)
 
     blur_data$focus[blur_data$blur == b] <- focus_ci["mean"]
     blur_data$focus_ci_hi[blur_data$blur == b] <- focus_ci["high"]
@@ -106,11 +109,11 @@ dom_make_data <- function(aggression_matrix,
   # Compute the focus of the un-resampled aggression matrix to correct for
   # bootstrap bias
   focus_raw <- dom_focus(aggression_matrix, epsilon = epsilon)
-  focus_ci <- bootstrap_ci(focus_vec, focus_raw)
+  focus_ci <- bootstrap_ci(focus_vec, focus_raw, correction = FALSE, recenter = TRUE)
 
   # Correct position in the same way
   position_raw <- dom_position(aggression_matrix, epsilon = epsilon)
-  position_ci <- bootstrap_ci(position_vec, position_raw)
+  position_ci <- bootstrap_ci(position_vec, position_raw, correction = FALSE, recenter = TRUE)
 
   data$focus <- focus_ci["mean"]
   data$focus_ci_hi <- focus_ci["high"]
@@ -135,7 +138,8 @@ dom_make_data <- function(aggression_matrix,
 #' @return named vector with corrected "mean", "high" (upper CI limit), "low"
 #'   (lower CI limit)
 #'
-bootstrap_ci <- function(bs_values, raw_mean, conf_level = 0.90, correction = TRUE) {
+bootstrap_ci <- function(bs_values, raw_mean, conf_level = 0.95,
+                         correction = FALSE, recenter = FALSE) {
   # Find the bootstrap estimate of the mean
   bs_mean <- mean(bs_values)
   # Find the percentiles of the bootstrap data corresponding to the confidence level
@@ -156,9 +160,17 @@ bootstrap_ci <- function(bs_values, raw_mean, conf_level = 0.90, correction = TR
     ci_hi <- raw_mean + (raw_mean - lo)
     ci_lo <- raw_mean + (raw_mean - hi)
   } else {
-    corrected_mean <- bs_mean
-    ci_hi <- hi
-    ci_lo <- lo
+    if (recenter) {
+      corrected_mean <- raw_mean
+      # No bias correction, but re-centering CI around raw mean
+      ci_hi <- hi + raw_mean - bs_mean
+      ci_lo <- lo + raw_mean - bs_mean
+    } else {
+      corrected_mean <- bs_mean
+      # No bias correction, no re-centering
+      ci_hi <- hi
+      ci_lo <- lo
+    }
   }
   return(c(mean = corrected_mean,
            high = ci_hi,

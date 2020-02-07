@@ -4,7 +4,13 @@
 \alias{bootstrap_ci}
 \title{Compute bootstrap confidence intervals and correct for bootstrap bias}
 \usage{
-bootstrap_ci(bs_values, raw_mean, conf_level = 0.9, correction = TRUE)
+bootstrap_ci(
+  bs_values,
+  raw_mean,
+  conf_level = 0.95,
+  correction = FALSE,
+  recenter = FALSE
+)
 }
 \arguments{
 \item{bs_values}{A vector of bootstrap estimates to be corrected}

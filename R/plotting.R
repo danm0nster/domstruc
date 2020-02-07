@@ -10,7 +10,7 @@ library(scales)
 #'
 #' @examples
 dom_plot_strategy <- function(data, blur_data) {
-  dev.new(width = 8, height = 8, unit = "in")
+  # dev.new(width = 8, height = 8, unit = "in")
   # Get convex hull of blur data with error bars
   ahuld.conv <- convex_hull(blur_data)
   # names(polyinVout)
@@ -173,6 +173,7 @@ dom_plot_strategy <- function(data, blur_data) {
 #'
 #' @examples
 dom_categorize_strategy <- function(data, blur_data) {
+  # TODO: Check data and blur_data. Should not contain NA.
   ahuld.conv <- convex_hull(blur_data)
   SUMM.point.topoly <- point_inside_polygon(data, blur_data, ahuld.conv)
   polygons <- make_polygons(data, blur_data)
