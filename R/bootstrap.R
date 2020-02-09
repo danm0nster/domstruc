@@ -6,15 +6,20 @@
 #' @param replications The number of bootstrap replications.
 #' @param epsilon The regularization parameter for computing eigenvalue
 #'   centrality.
+#' @param conf_level The confidence level used to compute lower and upper limits
+#'   of the confidence intervals on focus and position. Default is 0.95.
 #'
 #' @return Returns a data frame with columns `blur`, `focus`, `position`
+#'   and confidence intervals on focus (`focus_ci_lo`, `focus_ci_hi`) and
+#'   position (`position_ci_lo`, `position_ci_hi`).
 #' @export
 #'
 #' @examples
 dom_make_blur_data <- function(aggression_matrix,
                                blur_values = 0:10 / 10,
                                replications = 100,
-                               epsilon = 0.694) {
+                               epsilon = 0.694,
+                               conf_level = 0.95) {
   if (missing(aggression_matrix)) {
     stop("Please provide an aggression matrix as input.")
   } else {
@@ -24,6 +29,7 @@ dom_make_blur_data <- function(aggression_matrix,
   for (b in blur_values) {
     check_probability(b)
   }
+  check_probability(conf_level)
   # TODO: Make a check on replications
   blur_data <- data.frame(blur = blur_values,
                           focus = NA,
@@ -49,12 +55,12 @@ dom_make_blur_data <- function(aggression_matrix,
 
     focus_raw <- dom_focus(null_aggression_matrix, epsilon = epsilon)
     focus_ci <- bootstrap_ci(focus_vec, focus_raw,
-                             conf_level = 0.95,
+                             conf_level = conf_level,
                              correction = FALSE,
                              recenter = FALSE)
     position_raw <- dom_position(null_aggression_matrix, epsilon = epsilon)
     position_ci <- bootstrap_ci(position_vec, position_raw,
-                                conf_level = 0.95,
+                                conf_level = conf_level,
                                 correction = FALSE,
                                 recenter = FALSE)
 
@@ -82,7 +88,15 @@ dom_make_blur_data <- function(aggression_matrix,
 #' @examples
 dom_make_data <- function(aggression_matrix,
                           replications = 100,
-                          epsilon = 0.694) {
+                          epsilon = 0.694,
+                          conf_level = 0.95) {
+  if (missing(aggression_matrix)) {
+    stop("Please provide an aggression matrix as input.")
+  } else {
+    check_aggression_matrix(aggression_matrix)
+  }
+  check_epsilon(epsilon)
+  check_probability(conf_level)
   # Set up a data frame to hold the results
   data <- data.frame(focus = 0,
                      focus_ci_hi = 0,
@@ -101,11 +115,13 @@ dom_make_data <- function(aggression_matrix,
   # Compute the focus of the un-resampled aggression matrix to correct for
   # bootstrap bias
   focus_raw <- dom_focus(aggression_matrix, epsilon = epsilon)
-  focus_ci <- bootstrap_ci(focus_vec, focus_raw, correction = FALSE, recenter = TRUE)
+  focus_ci <- bootstrap_ci(focus_vec, focus_raw, correction = FALSE,
+                           recenter = TRUE, conf_level = conf_level)
 
   # Correct position in the same way
   position_raw <- dom_position(aggression_matrix, epsilon = epsilon)
-  position_ci <- bootstrap_ci(position_vec, position_raw, correction = FALSE, recenter = TRUE)
+  position_ci <- bootstrap_ci(position_vec, position_raw, correction = FALSE,
+                              recenter = TRUE, conf_level = conf_level)
 
   data$focus <- focus_ci["mean"]
   data$focus_ci_hi <- focus_ci["high"]
@@ -122,7 +138,7 @@ dom_make_data <- function(aggression_matrix,
 #' @param bs_values A vector of bootstrap estimates to be corrected
 #' @param raw_mean The "raw" mean of the measure to be corrected, i.e., not the
 #'   bootsrapped estimate of the mean.
-#' @param conf_level The confidence level. Default is 0.90, i.e. a 90%
+#' @param conf_level The confidence level. Default is 0.95, i.e. a 95%
 #'   confidence interval will be computed.
 #' @param correction Control whether to perform bias correction (TRUE) or not
 #'   (FALSE).

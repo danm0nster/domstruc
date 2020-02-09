@@ -9,7 +9,8 @@ dom_make_blur_data(
   aggression_matrix,
   blur_values = 0:10/10,
   replications = 100,
-  epsilon = 0.694
+  epsilon = 0.694,
+  conf_level = 0.95
 )
 }
 \arguments{
@@ -21,9 +22,14 @@ dom_make_blur_data(
 
 \item{epsilon}{The regularization parameter for computing eigenvalue
 centrality.}
+
+\item{conf_level}{The confidence level used to compute lower and upper limits
+of the confidence intervals on focus and position. Default is 0.95.}
 }
 \value{
 Returns a data frame with columns `blur`, `focus`, `position`
+  and confidence intervals on focus (`focus_ci_lo`, `focus_ci_hi`) and
+  position (`position_ci_lo`, `position_ci_hi`).
 }
 \description{
 Compute bootstrap estimates of focus and position for the downward null model

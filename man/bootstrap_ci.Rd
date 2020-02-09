@@ -18,7 +18,7 @@ bootstrap_ci(
 \item{raw_mean}{The "raw" mean of the measure to be corrected, i.e., not the
 bootsrapped estimate of the mean.}
 
-\item{conf_level}{The confidence level. Default is 0.90, i.e. a 90%
+\item{conf_level}{The confidence level. Default is 0.95, i.e. a 95%
 confidence interval will be computed.}
 
 \item{correction}{Control whether to perform bias correction (TRUE) or not

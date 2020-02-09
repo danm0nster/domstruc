@@ -4,7 +4,12 @@
 \alias{dom_make_data}
 \title{Compute bootstrap estimates of focus and position for aggression matrix}
 \usage{
-dom_make_data(aggression_matrix, replications = 100, epsilon = 0.694)
+dom_make_data(
+  aggression_matrix,
+  replications = 100,
+  epsilon = 0.694,
+  conf_level = 0.95
+)
 }
 \arguments{
 \item{aggression_matrix}{An aggression matrix.}
