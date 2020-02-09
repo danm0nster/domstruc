@@ -2,7 +2,8 @@
 % Please edit documentation in R/bootstrap.R
 \name{dom_make_data}
 \alias{dom_make_data}
-\title{Compute bootstrap estimates of focus and position for aggression matrix}
+\title{Compute bootstrap estimates of confience intervals for focus and position
+given an aggression matrix}
 \usage{
 dom_make_data(
   aggression_matrix,
@@ -18,10 +19,17 @@ dom_make_data(
 
 \item{epsilon}{The regularization parameter for computing eigenvalue
 centrality.}
+
+\item{conf_level}{The confidence level used to compute lower and upper
+limits of the confidence intervals on focus and position. The default
+value is 0.95.}
 }
 \value{
-
+Returns a data frame with columns `focus`, `position` and confidence
+  intervals on focus (`focus_ci_lo`, `focus_ci_hi`) and position
+  (`position_ci_lo`, `position_ci_hi`).
 }
 \description{
-Compute bootstrap estimates of focus and position for aggression matrix
+Compute bootstrap estimates of confience intervals for focus and position
+given an aggression matrix
 }

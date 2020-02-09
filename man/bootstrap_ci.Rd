@@ -21,8 +21,12 @@ bootsrapped estimate of the mean.}
 \item{conf_level}{The confidence level. Default is 0.95, i.e. a 95%
 confidence interval will be computed.}
 
-\item{correction}{Control whether to perform bias correction (TRUE) or not
+\item{correction}{Controls whether to perform bias correction (TRUE) or not
 (FALSE).}
+
+\item{recetner}{Controls whetehr to center the confidence interval on the
+value of `raw_mean`. Default is FALSE. Only relevant if `correction` is
+FALSE.}
 }
 \value{
 named vector with corrected "mean", "high" (upper CI limit), "low"

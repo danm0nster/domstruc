@@ -1,13 +1,15 @@
-#' Compute bootstrap estimates of focus and position for the downward null model
-#' with confidence intervals
+#' Compute bootstrap estimates of focus and position for the downward null
+#' model with confidence intervals
 #'
 #' @param aggression_matrix An aggression matrix.
-#' @param blur_values A vector of blur values to use in the downward null model.
+#' @param blur_values A vector of blur values to use in the downward null
+#'   model.
 #' @param replications The number of bootstrap replications.
 #' @param epsilon The regularization parameter for computing eigenvalue
 #'   centrality.
-#' @param conf_level The confidence level used to compute lower and upper limits
-#'   of the confidence intervals on focus and position. Default is 0.95.
+#' @param conf_level The confidence level used to compute lower and upper
+#'   limits of the confidence intervals on focus and position. The default
+#'   value is 0.95.
 #'
 #' @return Returns a data frame with columns `blur`, `focus`, `position`
 #'   and confidence intervals on focus (`focus_ci_lo`, `focus_ci_hi`) and
@@ -75,14 +77,21 @@ dom_make_blur_data <- function(aggression_matrix,
 }
 
 
-#' Compute bootstrap estimates of focus and position for aggression matrix
+#' Compute bootstrap estimates of confience intervals for focus and position
+#' given an aggression matrix
 #'
 #' @param aggression_matrix An aggression matrix.
 #' @param replications The number of bootstrap replications.
 #' @param epsilon The regularization parameter for computing eigenvalue
 #'   centrality.
+#' @param conf_level The confidence level used to compute lower and upper
+#'   limits of the confidence intervals on focus and position. The default
+#'   value is 0.95.
 #'
-#' @return
+#' @return Returns a data frame with columns `focus`, `position` and confidence
+#'   intervals on focus (`focus_ci_lo`, `focus_ci_hi`) and position
+#'   (`position_ci_lo`, `position_ci_hi`).
+#'
 #' @export
 #'
 #' @examples
@@ -140,8 +149,11 @@ dom_make_data <- function(aggression_matrix,
 #'   bootsrapped estimate of the mean.
 #' @param conf_level The confidence level. Default is 0.95, i.e. a 95%
 #'   confidence interval will be computed.
-#' @param correction Control whether to perform bias correction (TRUE) or not
+#' @param correction Controls whether to perform bias correction (TRUE) or not
 #'   (FALSE).
+#' @param recetner Controls whetehr to center the confidence interval on the
+#'   value of `raw_mean`. Default is FALSE. Only relevant if `correction` is
+#'   FALSE.
 #'
 #' @return named vector with corrected "mean", "high" (upper CI limit), "low"
 #'   (lower CI limit)

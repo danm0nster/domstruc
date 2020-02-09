@@ -2,8 +2,8 @@
 % Please edit documentation in R/bootstrap.R
 \name{dom_make_blur_data}
 \alias{dom_make_blur_data}
-\title{Compute bootstrap estimates of focus and position for the downward null model
-with confidence intervals}
+\title{Compute bootstrap estimates of focus and position for the downward null
+model with confidence intervals}
 \usage{
 dom_make_blur_data(
   aggression_matrix,
@@ -16,15 +16,17 @@ dom_make_blur_data(
 \arguments{
 \item{aggression_matrix}{An aggression matrix.}
 
-\item{blur_values}{A vector of blur values to use in the downward null model.}
+\item{blur_values}{A vector of blur values to use in the downward null
+model.}
 
 \item{replications}{The number of bootstrap replications.}
 
 \item{epsilon}{The regularization parameter for computing eigenvalue
 centrality.}
 
-\item{conf_level}{The confidence level used to compute lower and upper limits
-of the confidence intervals on focus and position. Default is 0.95.}
+\item{conf_level}{The confidence level used to compute lower and upper
+limits of the confidence intervals on focus and position. The default
+value is 0.95.}
 }
 \value{
 Returns a data frame with columns `blur`, `focus`, `position`
@@ -32,6 +34,6 @@ Returns a data frame with columns `blur`, `focus`, `position`
   position (`position_ci_lo`, `position_ci_hi`).
 }
 \description{
-Compute bootstrap estimates of focus and position for the downward null model
-with confidence intervals
+Compute bootstrap estimates of focus and position for the downward null
+model with confidence intervals
 }
