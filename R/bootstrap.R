@@ -34,35 +34,27 @@ dom_make_blur_data <- function(aggression_matrix,
                           position_ci_lo = NA)
   # Loop over blur values, compute position, focus and their CI
   for (b in blur_values) {
+    blur_matrix <- dom_make_downward_null(aggression_matrix,
+                                          blur = b,
+                                          epsilon = epsilon)
     focus_vec <- replicate(replications,
                            dom_focus(
-                             dom_resample(
-                               dom_make_downward_null(
-                                 dom_resample(aggression_matrix),
-                                 blur = b,
-                                 epsilon = epsilon))))
+                             dom_resample(blur_matrix)))
     position_vec <- replicate(replications,
                               dom_position(
-                                dom_resample(
-                                  dom_make_downward_null(
-                                    dom_resample(aggression_matrix),
-                                    blur = b,
-                                    epsilon = epsilon))))
+                                dom_resample(blur_matrix)))
     # Get a downward null aggression matrix for the blur level and compute
     # focus and position from this to be able to estimate the bootstrap bias.
     null_aggression_matrix <- dom_make_downward_null(aggression_matrix, blur = b, epsilon = epsilon)
-    # Set the confidence level for the confidence interval
-    one_sigma <- 0.6826895
-    one_sigma <- 0.95
 
     focus_raw <- dom_focus(null_aggression_matrix, epsilon = epsilon)
     focus_ci <- bootstrap_ci(focus_vec, focus_raw,
-                             conf_level = one_sigma,
+                             conf_level = 0.95,
                              correction = FALSE,
                              recenter = FALSE)
     position_raw <- dom_position(null_aggression_matrix, epsilon = epsilon)
     position_ci <- bootstrap_ci(position_vec, position_raw,
-                                conf_level = one_sigma,
+                                conf_level = 0.95,
                                 correction = FALSE,
                                 recenter = FALSE)
 
