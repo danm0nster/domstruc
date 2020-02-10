@@ -159,7 +159,7 @@ convex_hull <-  function(blur_data) {
   return(ahuld.conv)
 }
 
-make_polygons <- function(data, blur_data) {
+make_polygons <- function(blur_data) {
   # Define polygons to delineate regions to categorize strategies
 
   # BULLY POLYGON: region above simulated downward heuristic polygon, excluding
@@ -202,8 +202,14 @@ make_polygons <- function(data, blur_data) {
   return(polygons)
 }
 
-point_inside_polygon <- function(data, blur_data, ahuld.conv) {
-  polygons <- make_polygons(data, blur_data)
+point_inside_polygon <- function(data, blur_data, ahuld.conv, use_data_ci) {
+  if (!use_data_ci) {
+    data$focus_ci_lo <- data$focus
+    data$focus_ci_hi <- data$focus
+    data$position_ci_lo <- data$position
+    data$position_ci_hi <- data$position
+  }
+  polygons <- make_polygons(blur_data)
   bully.poly <- polygons[["bully"]]
   clcomps.poly <- polygons[["clcomps"]]
   undef.poly <- polygons[["undef"]]

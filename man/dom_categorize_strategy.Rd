@@ -4,10 +4,11 @@
 \alias{dom_categorize_strategy}
 \title{Categorize group-level strategy}
 \usage{
-dom_categorize_strategy(data, blur_data)
+dom_categorize_strategy(data, blur_data, use_data_ci = FALSE)
 }
 \arguments{
-\item{blur_data}{}
+\item{use_data_ci}{Controls whether confidence intercal on data is used.
+Default is FALSE, meaning only the point estimate is used.}
 }
 \value{
 String containing the name of the strategy used in the group.

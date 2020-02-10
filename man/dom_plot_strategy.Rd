@@ -2,16 +2,20 @@
 % Please edit documentation in R/plotting.R
 \name{dom_plot_strategy}
 \alias{dom_plot_strategy}
-\title{Title}
+\title{Plot focus, position and show strategy regions based on downward null
+heuristic.}
 \usage{
-dom_plot_strategy(data, blur_data)
+dom_plot_strategy(data, blur_data, show_data_ci = FALSE)
 }
 \arguments{
-\item{blur_data}{}
+\item{data}{A data frame containing one row with columns `focus` and `position`}
+
+\item{blur_data}{A data frame that is created by `dom_make_blur_data()`}
 }
 \value{
 
 }
 \description{
-Title
+Plot focus, position and show strategy regions based on downward null
+heuristic.
 }
